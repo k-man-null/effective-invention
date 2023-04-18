@@ -11,11 +11,8 @@ import {
 
 import CountDown from "../Components/CountDown";
 
-const baseUrl = 'http://localhost:5000/imageserver/'
-
 export default function CompetitionCard({ competition }) {
 
-    console.log(competition)
 
     return (
 
@@ -31,7 +28,7 @@ export default function CompetitionCard({ competition }) {
                 </LinkOverlay>
                 <Image
                     objectFit='cover'
-                    src={`${baseUrl}${competition?.prize_images[0]}`}
+                    src={`${competition?.prize_images[0]}`}
                     alt='Caffe Latte'
                     height={"150px"}
                     width="100%"

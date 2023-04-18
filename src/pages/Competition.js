@@ -133,7 +133,7 @@ export default function Competition() {
 
                         <Image
                             objectFit='cover'
-                            src={`${imageUrl}${image}`}
+                            src={`${image}`}
                             alt='Caffe Latte'
                             width="100%"
                             align='center'

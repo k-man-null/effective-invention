@@ -16,7 +16,8 @@ import {
     NumberInputField,
     NumberInputStepper,
     NumberIncrementStepper,
-    NumberDecrementStepper
+    NumberDecrementStepper,
+    useToast 
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Upload } from 'antd';
@@ -25,8 +26,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import theme from "../theme";
 import { baseUrl } from "../urls";
+import { Field, Form, Formik } from 'formik';
+
 
 function Hosting() {
+
+    const toast = useToast();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -132,7 +137,8 @@ function Hosting() {
         fileList,
         listType: "picture-card",
         onChange,
-        onPreview
+        onPreview,
+        accept: "image/png, image/jpeg"
     };
 
     function validateEndDate(EndDate) {
@@ -147,21 +153,6 @@ function Hosting() {
         return true
     }
 
-    function validatePrizeDescription(PrizeDescription) {
-
-        if (PrizeDescription === '' || PrizeDescription == undefined) {
-            return false
-        }
-
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(PrizeDescription)) {
-            return true
-        }
-
-    }
-
-    function validatePhone(phone) {
-        //TODO
-    }
 
     const create = (event) => {
 
@@ -184,27 +175,16 @@ function Hosting() {
         });
 
 
-        // if (
-        //     isTitleError ||
-        //     isDescriptionError ||
-        //     isPrizeDescriptionError ||
-        //     isTicketPriceError || 0
-
-        // ) {
-        //     return
-        // }
-
-        //TODO : Handle validation proper!!! like a boss 
-
         axios.post(`${baseUrl}/games`, formData, { withCredentials: true })
             .then((response) => {
-                
+                console.log(response)
                 alert(`The game ${response.data.done.title} is live`);
                 //TODO success to be displayed with toast
             })
             .catch((error) => {
 
                 //TODO errors to be displayed via toast
+                console.log(response)
 
                 alert(error.response.data);
             })
@@ -312,7 +292,7 @@ function Hosting() {
 
                     <FormLabel marginY='4'> Upload the images of your prize (maximum 5 images)</FormLabel>
                     {/* TODO : Handle file uploads for multiple max 8 and Single */}
-                    <ImgCrop rotationSlider>
+                    <ImgCrop rotationSlider >
                         <Upload
                             {...props}
                         >

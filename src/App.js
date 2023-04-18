@@ -45,6 +45,7 @@ function App() {
 
   const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [wallet, setWallet] = useState({});
 
   const { isOpen, onToggle, onClose } = useDisclosure();
   const iconRef = useRef();
@@ -67,7 +68,6 @@ function App() {
   }
 
 
-
   useEffect(() => {
     axios.get(`${baseUrl}/session/minProfile`, { withCredentials: true })
       .then((response) => {
@@ -84,9 +84,25 @@ function App() {
 
     , [])
 
+  useEffect(() => {
+    axios.get(`${baseUrl}/session/wallet`, { withCredentials: true })
+      .then((response) => {
+
+        setWallet(response.data);
+
+      })
+      .catch((error) => {
+
+        console.log(error);
+
+      })
+  }
+
+    , [])
+
   return (
     <ChakraProvider theme={theme}>
-      
+
 
       <Stack height="100vh" spacing={0} width="100vw" overflowX='hidden' overflowY='hidden'>
         <Drawer
@@ -124,7 +140,7 @@ function App() {
                     UserId {user?.user_id}
                   </Text>
                   <Text>
-                    Credit: $678
+                    Credit: KSH: {wallet?.available_balance}
                   </Text>
                   {/* TODO: Show the users account balance form intasend wallet */}
 
@@ -287,7 +303,7 @@ function App() {
                     UserId {user?.user_id ?? "userid"}
                   </Text>
                   <Text>
-                    Credit: $678
+                    Credit: KSH: {wallet?.available_balance}
                   </Text>
 
                   <Link to="profile">
@@ -390,7 +406,7 @@ function App() {
         </Stack>
 
       </Stack>
-    
+
     </ChakraProvider >
   )
 }

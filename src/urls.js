@@ -1,3 +1,3 @@
-const baseUrl = "https://6a00-196-109-149-1.ngrok-free.app"
+const baseUrl = "https://tiki-dev-server-7tzn6tu5vq-uc.a.run.app"
 
 module.exports = { baseUrl }
