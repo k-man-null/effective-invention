@@ -1,6 +1,4 @@
 import {
-    LinkBox,
-    LinkOverlay,
     Text,
     Stack,
     Heading,
@@ -8,10 +6,18 @@ import {
     Flex,
     Box,
     Button,
-    Avatar
-
+    Avatar,
+    useDisclosure,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
 
 } from "@chakra-ui/react";
+
 import Error from "../pages/Error"
 
 import { useState, useEffect } from "react";
@@ -24,6 +30,8 @@ import { baseUrl } from "../urls";
 
 export default function Competition() {
 
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
     const [competition, setCompetition] = useState(null);
     const [creator, setCreator] = useState(null);
 
@@ -33,7 +41,7 @@ export default function Competition() {
 
     useEffect(() => {
 
-        axios.get(`${baseUrl}/games/${competitionId}`,{ withCredentials: true })
+        axios.get(`${baseUrl}/games/${competitionId}`, { withCredentials: true })
             .then((response) => {
                 console.log(response.data);
                 setCompetition(response.data);
@@ -51,7 +59,7 @@ export default function Competition() {
 
     function getCreator(id) {
 
-        axios.get(`${baseUrl}/games/gamecreator/${id}`,{ withCredentials: true })
+        axios.get(`${baseUrl}/games/gamecreator/${id}`, { withCredentials: true })
             .then((response) => {
 
 
@@ -65,9 +73,35 @@ export default function Competition() {
 
     }
 
+    function enterCompetition() {
+        console.log("Enetring competition flow here.......")
+        //
+    }
+
     return (
 
         <>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Select the number of tickets you want</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text>
+                            This is the body of the modal, will be a form selecting the number 
+                            of tickets to purchase.
+                            Also ability to enter promo code for discounts if game if discount eleigible
+                        </Text>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button  variant='outline' colorScheme='red' mr={3} onClick={onClose}>
+                            Close
+                        </Button>
+                        <Button  onClick={enterCompetition} variant='solid'>Purchase</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
 
             {competition !== null ?
 
@@ -115,7 +149,7 @@ export default function Competition() {
 
                     <Flex>
 
-                        <Button w="100%" colorScheme='teal'>Enter</Button>
+                        <Button onClick={onOpen} w="100%" colorScheme='teal'>Enter</Button>
 
                     </Flex>
 
@@ -146,7 +180,7 @@ export default function Competition() {
 
                     <Heading mb='2' size="lg" color='teal.400'>Winner</Heading>
 
-                    { competition?.released ?
+                    {competition?.released ?
 
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                             <Avatar name={creator?.name} src={creator?.avatar} />

@@ -2,8 +2,6 @@ import {
     ChakraProvider,
     FormControl,
     FormLabel,
-    FormErrorMessage,
-    FormHelperText,
     Input,
     Button,
     Text,
@@ -17,7 +15,7 @@ import {
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
-    useToast 
+    useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Upload } from 'antd';
@@ -26,12 +24,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import theme from "../theme";
 import { baseUrl } from "../urls";
-import { Field, Form, Formik } from 'formik';
-
 
 function Hosting() {
-
-    const toast = useToast();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -44,12 +38,6 @@ function Hosting() {
     const [EndDate, setEndDate] = useState();
     const [fileList, setFileList] = useState([]);
     const navigate = useNavigate();
-
-    const isTitleError = title === '';
-    const isDescriptionError = description === '';
-    const isPrizeDescriptionError = validatePrizeDescription(PrizeDescription);
-    const isTicketPriceError = TicketPrice === '';
-    //const isEndDateError = validateEndDate(EndDate);
 
     const prizeCategories = [
         'experience',
@@ -72,9 +60,22 @@ function Hosting() {
 
     ]
 
+    const toast = useToast();
+
+    const showToast = (status, message) => {
+
+        toast({
+            title: status === 'error' ? 'Error' : 'Success',
+            description: message,
+            status: status,
+            duration: 9000,
+            isClosable: true,
+        });
+    }
+
     const getLocation = () => {
         function success(position) {
-            console.log(position);
+            //console.log(position);
             setPrizeLocation(position.coords.latitude, position.coords.longitude);
         }
 
@@ -99,8 +100,6 @@ function Hosting() {
         }
 
     }
-
-    
 
     const onChange = ({ fileList: newFileList }) => {
         setFileList(newFileList);
@@ -141,24 +140,71 @@ function Hosting() {
         accept: "image/png, image/jpeg"
     };
 
-    function validateEndDate(EndDate) {
-        //TODO validate end date
-        if (EndDate < Date.now()) {
-            return false
-        }
-        if (EndDate.length < 8) {
-            return false
-        }
-
-        return true
-    }
-
 
     const create = (event) => {
 
         event.preventDefault();
 
+        // Check if all required fields are filled
+        // Check if title is filled
+        // Check if title is filled
+        if (!title) {
+            showToast('error', 'Title is required');
+            return;
+        }
+
+        // Check if description is filled
+        if (!description) {
+            showToast('error', 'Description is required');
+            return;
+        }
+
+        // Check if EndDate is filled
+        if (!EndDate) {
+            showToast('error', 'End Date is required');
+            return;
+        }
+
+        // Check if PrizeDescription is filled
+        if (!PrizeDescription) {
+            showToast('error', 'Prize Description is required');
+            return;
+        }
+
+        // Check if TicketPrice is filled
+        if (!TicketPrice) {
+            showToast('error', 'Ticket Price is required');
+            return;
+        }
+
+        // Check if TotalTickets is filled
+        if (!TotalTickets) {
+            showToast('error', 'Total Tickets is required');
+            return;
+        }
+
+        // Check if prizeCategory is filled
+        if (!prizeCategory) {
+            showToast('error', 'Prize Category is required');
+            return;
+        }
+
+        // Check if at least one image is selected
+        if (fileList.length === 0) {
+            showToast('error', 'Please select at least one image');
+            return;
+        }
+
+        // Validate that EndDate is not a past date
+        const currentDate = new Date();
+        const selectedDate = new Date(EndDate);
+        if (selectedDate < currentDate) {
+            showToast('error', 'Please select a future date for the End Date');
+            return;
+        }
+
         const formData = new FormData();
+
         formData.append('title', title)
         formData.append('description', description)
         formData.append('EndDate', EndDate)
@@ -168,28 +214,25 @@ function Hosting() {
         formData.append('Delivery', Delivery)
         formData.append('prizeCategory', prizeCategory)
 
-
         fileList.forEach((file) => {
 
             formData.append('images', file.originFileObj);
-        });
 
+        });
+        console.log("I gt here")
 
         axios.post(`${baseUrl}/games`, formData, { withCredentials: true })
             .then((response) => {
-                console.log(response)
-                alert(`The game ${response.data.done.title} is live`);
-                //TODO success to be displayed with toast
+                
+                showToast('Success', `The game ${response.data.done.title} is live`)
+
+                navigate('/app');
             })
             .catch((error) => {
 
-                //TODO errors to be displayed via toast
-                console.log(response)
+                showToast("Error", "There was an error, please try again");
 
-                alert(error.response.data);
             })
-
-
     }
 
     return (
@@ -204,7 +247,7 @@ function Hosting() {
                     method="post"
                     onSubmit={create}>
                     {/* Title input */}
-                    <FormControl isInvalid={isTitleError}>
+                    <FormControl isRequired>
                         <FormLabel>Title of the Competition</FormLabel>
                         <Input
                             marginY='4'
@@ -213,13 +256,7 @@ function Hosting() {
                             value={title}
                             onChange={(event) => setTitle(event.target.value)}>
                         </Input>
-                        {!isTitleError ? (
-                            <FormHelperText>
-                                Enter the title
-                            </FormHelperText>
-                        ) : (
-                            <FormErrorMessage>Title is required.</FormErrorMessage>
-                        )}
+
                     </FormControl>
 
                     <Divider marginY='4' />
@@ -228,7 +265,7 @@ function Hosting() {
 
                     {/* Start Description */}
 
-                    <FormControl isInvalid={isDescriptionError}>
+                    <FormControl isRequired>
 
                         <FormLabel>A not so long description of the competition</FormLabel>
                         <Textarea
@@ -239,13 +276,7 @@ function Hosting() {
                             onChange={(event) => setDescription(event.target.value)}>
 
                         </Textarea>
-                        {!isDescriptionError ? (
-                            <FormHelperText>
-                                Enter your long Description.
-                            </FormHelperText>
-                        ) : (
-                            <FormErrorMessage>Description is required.</FormErrorMessage>
-                        )}
+
                     </FormControl>
 
                     {/* End Description */}
@@ -253,7 +284,7 @@ function Hosting() {
                     <Divider marginY='4' />
 
                     {/* Start PrizeDescription input */}
-                    <FormControl isInvalid={isPrizeDescriptionError}>
+                    <FormControl isRequired>
 
                         <FormLabel >A description of the prize</FormLabel>
                         <Textarea
@@ -263,30 +294,27 @@ function Hosting() {
                             value={PrizeDescription}
                             onChange={(event) => setPrizeDescription(event.target.value)}>
                         </Textarea>
-                        {!isPrizeDescriptionError ? (
-                            <FormHelperText>
-                                Describe the prize in detail.
-                            </FormHelperText>
-                        ) : (
-                            <FormErrorMessage>PrizeDescription is required.</FormErrorMessage>
-                        )}
+
                     </FormControl>
 
                     {/* End PrizeDescription input */}
 
                     <Divider marginY='4' />
 
-                    <FormLabel>Select the Category of your Prize</FormLabel>
-                    <Select
-                        marginY='4'
-                        value={prizeCategory}
-                        onChange={(event) => setPrizeCategory(event.target.value)}>
+                    <FormControl isRequired>
 
-                        {
-                            prizeCategories.map(category => <option key={category} value={category}>{category}</option>)
-                        }
+                        <FormLabel>Select the Category of your Prize</FormLabel>
+                        <Select
+                            marginY='4'
+                            value={prizeCategory}
+                            onChange={(event) => setPrizeCategory(event.target.value)}>
 
-                    </Select>
+                            {
+                                prizeCategories.map(category => <option key={category} value={category}>{category}</option>)
+                            }
+
+                        </Select>
+                    </FormControl>
 
                     <Divider marginY='4' />
 
@@ -304,25 +332,27 @@ function Hosting() {
 
                     <Divider marginY='4' />
 
-                    <FormLabel>Price per Ticket</FormLabel>
-                    <Select
-                        marginY='4'
-                        value={TicketPrice}
-                        onChange={(event) => setTicketPrice(Number(event.target.value))}>
-                        <option value='50'>50</option>
-                        <option value='100'>100</option>
-                        <option value='200'>200</option>
-                        <option value='250'>250</option>
-                        <option value='500'>500</option>
-                        <option value='1000'>1000</option>
-                        <option value='2000'>2000</option>
-                        <option value='3000'>3000</option>
-                        <option value='4000'>4000</option>
-                        <option value='5000'>5000</option>
-                        <option value='10000'>10000</option>
+                    <FormControl isRequired>
 
-                    </Select>
+                        <FormLabel>Price per Ticket</FormLabel>
+                        <Select
+                            marginY='4'
+                            value={TicketPrice}
+                            onChange={(event) => setTicketPrice(Number(event.target.value))}>
+                            <option value='50'>50</option>
+                            <option value='100'>100</option>
+                            <option value='200'>200</option>
+                            <option value='250'>250</option>
+                            <option value='500'>500</option>
+                            <option value='1000'>1000</option>
+                            <option value='2000'>2000</option>
+                            <option value='3000'>3000</option>
+                            <option value='4000'>4000</option>
+                            <option value='5000'>5000</option>
+                            <option value='10000'>10000</option>
 
+                        </Select>
+                    </FormControl>
 
                     {/* End TicketPrice input */}
 
@@ -330,35 +360,41 @@ function Hosting() {
 
                     {/* Start Number of Tickets input */}
 
-                    <FormLabel>Total tickets to be sold (max 1 Million, minimum 200)</FormLabel>
+                    <FormControl isRequired>
 
-                    <NumberInput
-                        marginY='4'
-                        value={TotalTickets}
-                        defaultValue={200}
-                        min={200} max={1000000}
-                        onChange={(value) => setTotalTickets(Number(value))}
-                    >
-                        <NumberInputField />
-                        <NumberInputStepper>
-                            <NumberIncrementStepper />
-                            <NumberDecrementStepper />
-                        </NumberInputStepper>
-                    </NumberInput>
+                        <FormLabel>Total tickets to be sold (max 1 Million, minimum 200)</FormLabel>
+
+                        <NumberInput
+                            marginY='4'
+                            value={TotalTickets}
+                            defaultValue={200}
+                            min={200} max={1000000}
+                            onChange={(value) => setTotalTickets(Number(value))}
+                        >
+                            <NumberInputField />
+                            <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                            </NumberInputStepper>
+                        </NumberInput>
+                    </FormControl>
 
                     {/* End Number of Tickets input */}
 
                     <Divider marginY='4' />
 
-                    <FormLabel>Delivery</FormLabel>
-                    <Select
-                        marginY='4'
-                        value={Delivery}
-                        onChange={(event) => setDelivery(event.target.value)}>
-                        <option value='host'>Host Covers Cost</option>
-                        <option value='winner'>Winner Covers Cost</option>
-                        <option value='collect'>Receive at Business Premise </option>
-                    </Select>
+                    <FormControl isRequired>
+
+                        <FormLabel>Delivery</FormLabel>
+                        <Select
+                            marginY='4'
+                            value={Delivery}
+                            onChange={(event) => setDelivery(event.target.value)}>
+                            <option value='host'>Host Covers Cost</option>
+                            <option value='winner'>Winner Covers Cost</option>
+                            <option value='collect'>Receive at Business Premise </option>
+                        </Select>
+                    </FormControl>
 
                     {/* End TicketPrice input */}
 
@@ -388,7 +424,7 @@ function Hosting() {
                     <Divider marginY='4' />
 
                     {/* Start EndDate input */}
-                    <FormControl >
+                    <FormControl isRequired>
 
                         <FormLabel> Pick an End Date</FormLabel>
                         <Input
