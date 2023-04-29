@@ -71,7 +71,7 @@ export default function Competition() {
 
         axios.get(`${baseUrl}/games/${competitionId}`, { withCredentials: true })
             .then((response) => {
-                //console.log(response.data);
+                
                 setCompetition(response.data);
                 getCreator(response.data.host_id)
 
@@ -101,31 +101,6 @@ export default function Competition() {
 
     }
 
-    // function validatePhone(phone) {
-
-    //     let error;
-
-    //     if (!phone) {
-    //         error = "Phone number is required"
-
-    //     } else {
-    //         if (phone.slice(0, 3) !== "254") {
-
-    //             error = "Start the number with 254"
-
-    //         }
-
-    //         if (phone.length !== 12) {
-
-    //             error = "Enter a valid phone number"
-
-    //         }
-    //     }
-
-    //     return error;
-
-    // }
-
     function enterCompetition() {
 
         if (competitionId === null) {
@@ -136,18 +111,6 @@ export default function Competition() {
             return;
         }
 
-        // if (phone_number === null) {
-        //     return;
-        // }
-
-        // let result = validatePhone(phone_number);
-
-        // if (result) {
-        //     setPhoneNumberError(result);
-        //     return;
-        // }
-
-
         const data = {
             game_id: competitionId,
             total_tickets: ticketPurchase
@@ -155,8 +118,8 @@ export default function Competition() {
 
         axios.post(`${baseUrl}/tickets/enterGame`, data, { withCredentials: true })
             .then((response) => {
-                
-                showToast("succcess", response.data.message)
+                onClose()
+                showToast("success", response.data.message)
             })
             .catch((error) => {
                 console.log(error.response)
