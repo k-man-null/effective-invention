@@ -224,7 +224,7 @@ function Hosting() {
         axios.post(`${baseUrl}/games`, formData, { withCredentials: true })
             .then((response) => {
                 
-                showToast('Success', `The game ${response.data.done.title} is live`)
+                showToast('success', `The game is live`)
 
                 navigate('/app');
             })

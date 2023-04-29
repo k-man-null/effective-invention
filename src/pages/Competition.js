@@ -47,6 +47,8 @@ export default function Competition() {
     const [competition, setCompetition] = useState(null);
     const [creator, setCreator] = useState(null);
     const [ticketPurchase, setTicketPurchase] = useState(1);
+    const [winner, setWinner] = useState(null);
+
     // const [phone_number, setPhoneNumber] = useState("");
     // const [phone_number_error, setPhoneNumberError] = useState("");
 
@@ -74,6 +76,9 @@ export default function Competition() {
                 
                 setCompetition(response.data);
                 getCreator(response.data.host_id)
+                if(response.data.status === "ended") {
+                    getWinnerNameAvatar(response.data.host_id)
+                }
 
             })
             .catch((error) => {
@@ -98,6 +103,22 @@ export default function Competition() {
                 alert("There was an error! Try again later");
 
             })
+
+    }
+
+    function getWinnerNameAvatar(id) {
+
+        axios.get(`${baseUrl}/session/winner/${id}`, { withCredentials: true })
+        .then((response) => {
+
+            setWinner(response.data);
+
+        })
+        .catch((error) => {
+
+            alert("There was an error! Try again later");
+
+        })
 
     }
 
@@ -188,7 +209,7 @@ export default function Competition() {
                         <Button variant='outline' colorScheme='red' mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button onClick={enterCompetition} colorScheme="teal" variant='solid'>Purchase</Button>
+                        <Button disabled={competition?.status === "ended"} onClick={enterCompetition} colorScheme="teal" variant='solid'>Purchase</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
@@ -239,7 +260,7 @@ export default function Competition() {
 
                     <Flex>
 
-                        <Button onClick={onOpen} w="100%" colorScheme='teal'>Enter</Button>
+                        <Button  disabled={competition?.status === "ended"} onClick={onOpen} w="100%" colorScheme='teal'>Enter</Button>
 
                     </Flex>
 
@@ -270,14 +291,14 @@ export default function Competition() {
 
                     <Heading mb='2' size="lg" color='teal.400'>Winner</Heading>
 
-                    {competition?.released ?
+                    {competition?.status === "ended" ?
 
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar name={creator?.name} src={creator?.avatar} />
+                            <Avatar name={`${winner?.first_name} ${winner?.last_name}}`} src={winner?.profile_image} />
 
                             <Box>
-                                <Heading size='sm'>{creator?.name}</Heading>
-
+                                <Heading size='sm'>{winner?.user_name}</Heading>
+                                <Text>Winning ticket id: {competition.winningTicket_id}</Text>
                             </Box>
                         </Flex> : <Text>The competition has not ended! </Text>
                     }
