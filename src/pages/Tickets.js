@@ -9,6 +9,7 @@ import {
 import Ticket from "./Ticket";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { baseUrl } from "../urls";
 
 function Tickets() {
 

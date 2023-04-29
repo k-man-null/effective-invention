@@ -15,6 +15,18 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
+    NumberInputField,
+    FormControl,
+    FormLabel,
+    NumberInput,
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInputStepper,
+    Divider,
+    Input,
+    FormErrorMessage,
+    useToast,
+    colorScheme
 
 } from "@chakra-ui/react";
 
@@ -34,8 +46,24 @@ export default function Competition() {
 
     const [competition, setCompetition] = useState(null);
     const [creator, setCreator] = useState(null);
+    const [ticketPurchase, setTicketPurchase] = useState(1);
+    // const [phone_number, setPhoneNumber] = useState("");
+    // const [phone_number_error, setPhoneNumberError] = useState("");
 
     let params = useParams();
+
+    const toast = useToast();
+
+    const showToast = (status, message) => {
+
+        toast({
+            title: status === 'error' ? 'Error' : 'Success',
+            description: message,
+            status: status,
+            duration: 9000,
+            isClosable: true,
+        });
+    }
 
     const { competitionId } = { ...params };
 
@@ -43,7 +71,7 @@ export default function Competition() {
 
         axios.get(`${baseUrl}/games/${competitionId}`, { withCredentials: true })
             .then((response) => {
-                console.log(response.data);
+                //console.log(response.data);
                 setCompetition(response.data);
                 getCreator(response.data.host_id)
 
@@ -62,43 +90,142 @@ export default function Competition() {
         axios.get(`${baseUrl}/games/gamecreator/${id}`, { withCredentials: true })
             .then((response) => {
 
-
                 setCreator(response.data);
 
             })
             .catch((error) => {
 
-                alert(error.message);
+                alert("There was an error! Try again later");
+
             })
 
     }
 
+    // function validatePhone(phone) {
+
+    //     let error;
+
+    //     if (!phone) {
+    //         error = "Phone number is required"
+
+    //     } else {
+    //         if (phone.slice(0, 3) !== "254") {
+
+    //             error = "Start the number with 254"
+
+    //         }
+
+    //         if (phone.length !== 12) {
+
+    //             error = "Enter a valid phone number"
+
+    //         }
+    //     }
+
+    //     return error;
+
+    // }
+
     function enterCompetition() {
-        console.log("Enetring competition flow here.......")
-        //
+
+        if (competitionId === null) {
+            return;
+        }
+
+        if (ticketPurchase === null) {
+            return;
+        }
+
+        // if (phone_number === null) {
+        //     return;
+        // }
+
+        // let result = validatePhone(phone_number);
+
+        // if (result) {
+        //     setPhoneNumberError(result);
+        //     return;
+        // }
+
+
+        const data = {
+            game_id: competitionId,
+            total_tickets: ticketPurchase
+        }
+
+        axios.post(`${baseUrl}/tickets/enterGame`, data, { withCredentials: true })
+            .then((response) => {
+                
+                showToast("succcess", response.data.message)
+            })
+            .catch((error) => {
+                console.log(error.response)
+                showToast("error", error.response.data)
+            })
+
     }
 
     return (
 
         <>
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
+            <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                <ModalOverlay bg='none'
+                    backdropFilter='auto'
+                    backdropBlur='2px' />
                 <ModalContent>
-                    <ModalHeader>Select the number of tickets you want</ModalHeader>
+                    <ModalHeader>Select the number of tickets</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <Text>
-                            This is the body of the modal, will be a form selecting the number 
-                            of tickets to purchase.
-                            Also ability to enter promo code for discounts if game if discount eleigible
-                        </Text>
+                        <FormControl>
+                            <FormLabel>Enter number of tickets</FormLabel>
+                            <NumberInput
+                                onChange={(value) => {
+                                    setTicketPurchase(value);
+                                }}
+                                value={ticketPurchase}
+                            >
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
+                        </FormControl>
+
+                        {/* <FormControl>
+                            <FormLabel>Enter your mpesa phone number</FormLabel>
+                            <Input
+                                onChange={(event) => {
+                                    setPhoneNumber(event.target.value);
+                                }}
+                                value={phone_number}
+                                placeholder="254722000000"
+                                type="text"
+                            >
+                            </Input>
+                            <FormErrorMessage>{phone_number_error}</FormErrorMessage>
+                        </FormControl> */}
+
+                        <Divider marginY={4}></Divider>
+
+                        <Flex>
+                            <Box w="50%">
+                                <Heading size="sm">Total Tickets</Heading>
+                                <Text>{ticketPurchase}</Text>
+                            </Box>
+                            <Box w="50%">
+                                <Heading size="sm">Total Amount</Heading>
+                                <Text color={"teal.400"}>KSH {ticketPurchase * competition?.ticket_price}</Text>
+                            </Box>
+
+                        </Flex>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button  variant='outline' colorScheme='red' mr={3} onClick={onClose}>
+                        <Button variant='outline' colorScheme='red' mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button  onClick={enterCompetition} variant='solid'>Purchase</Button>
+                        <Button onClick={enterCompetition} colorScheme="teal" variant='solid'>Purchase</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

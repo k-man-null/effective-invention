@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, Text, Image, theme, Button } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text, Button } from '@chakra-ui/react';
 import goldRaffleBg from '../assets/gold_raffle_background.png';
 
 
@@ -68,8 +68,6 @@ const Ticket = ({ ticket }) => {
           <Text fontSize="l" mr={2} fontWeight="bold" fontFamily="heading">{status.toUpperCase()}</Text>
           { status === "won" ? <Button  onClick={handleClaim} colorScheme='teal'>CLAIM</Button> : "" }
         </Flex>
-
-
 
         {/* Message */}
         <Box>

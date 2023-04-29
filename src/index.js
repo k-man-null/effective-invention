@@ -35,8 +35,10 @@ root.render(
           <Route path='tickets' element={<Tickets />} />
           <Route path='tickets/:ticketId' element={<Ticket />} />
           <Route path='profile' element={<Profile />} />
-          <Route index element={<Competitions />} />
+          <Route index element={<Competitions type="all"/>} />
           <Route path='competitions/:competitionId' element={<Competition />} />
+          <Route path='mylive' element={<Competitions type="mylive"/>}/>
+          <Route path='myended' element={<Competitions type="myended"/>}/>
         </Route>
         <Route path='winners' element={<Winners />} />
         <Route path='*' element={<Error />} />

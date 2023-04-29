@@ -35,7 +35,6 @@ import {
   SettingsIcon
 } from '@chakra-ui/icons';
 
-
 import { useRef, useState, useEffect } from 'react';
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
@@ -158,6 +157,15 @@ function App() {
 
                 <Stack paddingLeft='4'>
                   <Heading as='h2' size="md">Competitions</Heading>
+                  <Link to="/app" onClick={onClose}>
+                    <Stack direction="row">
+                      <Center>
+                        <TriangleDownIcon marginRight="2"></TriangleDownIcon>
+                        <Text>All Competitions</Text>
+                      </Center>
+                    </Stack>
+                  </Link>
+
                   <Link to="host" onClick={onClose}>
                     <Stack direction="row">
                       <Center>
@@ -167,28 +175,21 @@ function App() {
                     </Stack>
                   </Link>
 
-                  <Link to="competitions" onClick={onClose}>
+                  <Link to="mylive" onClick={onClose}>
                     <Stack direction="row">
                       <Center>
                         <SunIcon marginRight="2"></SunIcon>
-                        <Text>Live</Text>
-                      </Center>
-                    </Stack>
-                  </Link>
-                  <Link to="pending" onClick={onClose}>
-                    <Stack direction="row">
-                      <Center>
-                        <MoonIcon marginRight="2"></MoonIcon>
-                        <Text>Pending</Text>
+                        <Text>My Live Competitions</Text>
                       </Center>
                     </Stack>
                   </Link>
 
-                  <Link to="ended" onClick={onClose}>
+
+                  <Link to="myended" onClick={onClose}>
                     <Stack direction="row">
                       <Center>
-                        <TriangleDownIcon marginRight="2"></TriangleDownIcon>
-                        <Text>Ended</Text>
+                        <MoonIcon marginRight="2"></MoonIcon>
+                        <Text>My Ended Competitions</Text>
                       </Center>
                     </Stack>
                   </Link>
@@ -216,7 +217,6 @@ function App() {
                       </Center>
                     </Stack>
                   </Link>
-
                 </Stack>
 
                 <Divider />
@@ -282,7 +282,7 @@ function App() {
               height='100%'
             >
               <Stack>
-
+                
                 <Center height='60px'>
                   <Heading
                     color='teal.900'
@@ -292,7 +292,6 @@ function App() {
                     marginRight='4'
                   >TikiTiki</Heading>
                 </Center>
-
 
                 <Stack paddingLeft='4'>
                   <Heading as='h2' size="md">Profile</Heading>
@@ -320,6 +319,14 @@ function App() {
 
                 <Stack paddingLeft='4'>
                   <Heading as='h2' size="md">Competitions</Heading>
+                  <Link to="/app">
+                    <Stack direction="row">
+                      <Center>
+                        <TriangleDownIcon marginRight="2"></TriangleDownIcon>
+                        <Text>All Competitions</Text>
+                      </Center>
+                    </Stack>
+                  </Link>
                   <Link to="host">
                     <Stack direction="row">
                       <Center>
@@ -329,28 +336,20 @@ function App() {
                     </Stack>
                   </Link>
 
-                  <Link to="competitions">
+                  <Link to="mylive">
                     <Stack direction="row">
                       <Center>
                         <SunIcon marginRight="2"></SunIcon>
-                        <Text>Live</Text>
-                      </Center>
-                    </Stack>
-                  </Link>
-                  <Link to="pending">
-                    <Stack direction="row">
-                      <Center>
-                        <MoonIcon marginRight="2"></MoonIcon>
-                        <Text>Pending</Text>
+                        <Text>My Live Competitions</Text>
                       </Center>
                     </Stack>
                   </Link>
 
-                  <Link to="ended">
+                  <Link to="myended">
                     <Stack direction="row">
                       <Center>
-                        <TriangleDownIcon marginRight="2"></TriangleDownIcon>
-                        <Text>Ended</Text>
+                        <MoonIcon marginRight="2"></MoonIcon>
+                        <Text>My Ended Competitions</Text>
                       </Center>
                     </Stack>
                   </Link>
@@ -399,8 +398,8 @@ function App() {
 
             </Box>
           </Show>
-
-          <Box height='100%' width='800px' padding='4' overflowY='scroll'>
+          {/* The main part of the app i.e outlet for routing */}
+          <Box height='100%' width='1000px' padding='4' overflowY='scroll'>
             <Outlet />
           </Box>
         </Stack>
