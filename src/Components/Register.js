@@ -25,6 +25,8 @@ export default function Register(props) {
         axios.post(`${baseUrl}/users/register`, user, { withCredentials: true })
             .then((response) => {
 
+                actions.isSubmitting = false
+
                 props.setTab(1);
 
                 toast({

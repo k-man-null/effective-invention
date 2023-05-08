@@ -71,13 +71,17 @@ export default function Competition() {
 
     useEffect(() => {
 
+        
+
         axios.get(`${baseUrl}/games/${competitionId}`, { withCredentials: true })
             .then((response) => {
                 
                 setCompetition(response.data);
                 getCreator(response.data.host_id)
-                if(response.data.status === "ended") {
-                    getWinnerNameAvatar(response.data.host_id)
+
+                console.log(response);
+                if(response.data.status === "ended" && response.data.winning_ticket_id) {
+                    getWinnerNameAvatar(competitionId,response.data.winning_ticket_id)
                 }
 
             })
@@ -106,9 +110,9 @@ export default function Competition() {
 
     }
 
-    function getWinnerNameAvatar(id) {
+    function getWinnerNameAvatar(game_id, won_ticket_id) {
 
-        axios.get(`${baseUrl}/session/winner/${id}`, { withCredentials: true })
+        axios.get(`${baseUrl}/session/winner/?game=${game_id}&won_ticket_id=${won_ticket_id}`, { withCredentials: true })
         .then((response) => {
 
             setWinner(response.data);
@@ -298,8 +302,9 @@ export default function Competition() {
 
                             <Box>
                                 <Heading size='sm'>{winner?.user_name}</Heading>
-                                <Text>Winning ticket id: {competition.winningTicket_id}</Text>
+                                <Text>Winning ticket id: {competition.winning_ticket_id}</Text>
                             </Box>
+
                         </Flex> : <Text>The competition has not ended! </Text>
                     }
 

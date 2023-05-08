@@ -296,9 +296,8 @@ function Landing() {
               Brands
             </Heading>
             <Text>
-              ugaoc agew  aewgia iuaug iwe uia iuwec ia ricaiw ciuw.
-              GONFNOgvova ao georgv oayo goaivg viu vagvia veiv gaeirva
-              cawcgevinaw8p wgev qavgo ceagq xwecgoalgyp2q
+              Brands use TikiTiki to host credible competitions where the 
+              participants are guaranteed fairness.
             </Text>
 
           </Stack>
@@ -321,9 +320,9 @@ function Landing() {
               Influencers
             </Heading>
             <Text>
-              ugaoc agew  aewgia iuaug iwe uia iuwec ia ricaiw ciuw.
-              GONFNOgvova ao georgv oayo goaivg viu vagvia veiv gaeirva
-              cawcgevinaw8p wgev qavgo ceagq xwecgoalgyp2q
+              Influencers take advantage of their audience to generate 
+              extra income for both the audience and themselves. TikiTiki 
+              simplifies competitions for influencers in a simple way.
             </Text>
 
           </Stack>
@@ -347,9 +346,9 @@ function Landing() {
               Sports
             </Heading>
             <Text>
-              ugaoc agew  aewgia iuaug iwe uia iuwec ia ricaiw ciuw.
-              GONFNOgvova ao georgv oayo goaivg viu vagvia veiv gaeirva
-              cawcgevinaw8p wgev qavgo ceagq xwecgoalgyp2q
+              Sports organizers place tickets as prizes, and the winners get free tickets.
+              Organizers get to use a credible and reliable platform 
+              to host their competitions.
             </Text>
 
           </Stack>
@@ -372,9 +371,10 @@ function Landing() {
               Businesses
             </Heading>
             <Text>
-              ugaoc agew  aewgia iuaug iwe uia iuwec ia ricaiw ciuw.
-              GONFNOgvova ao georgv oayo goaivg viu vagvia veiv gaeirva
-              cawcgevinaw8p wgev qavgo ceagq xwecgoalgyp2q
+              Businesses generate more buzz about their products and services
+              by hosting public and credible competitions with us.
+              Businesses provide their services or products as prizes in the 
+              competition.
             </Text>
 
           </Stack>
@@ -397,9 +397,9 @@ function Landing() {
               Schools
             </Heading>
             <Text>
-              ugaoc agew  aewgia iuaug iwe uia iuwec ia ricaiw ciuw.
-              GONFNOgvova ao georgv oayo goaivg viu vagvia veiv gaeirva
-              cawcgevinaw8p wgev qavgo ceagq xwecgoalgyp2q
+              Schools can also host competitions to raise funds for charitable
+              causes or for any other reason.
+
             </Text>
 
           </Stack>

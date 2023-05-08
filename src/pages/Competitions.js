@@ -18,6 +18,8 @@ function Competitions({ type }) {
         let url;
 
         const fetchData = async () => {
+
+            console.log("I got called")
             
             try {
                 setCompetitions([]);
@@ -32,7 +34,8 @@ function Competitions({ type }) {
                 const response = await axios.get(url, { withCredentials: true });
                 setCompetitions([...response.data]);
             } catch (error) {
-                alert(error.message);
+                console.log(error)
+                //alert(error.message);
             }
         }
 
@@ -44,7 +47,7 @@ function Competitions({ type }) {
         <ChakraProvider theme={theme}>
 
             <Heading mb='4'>{type} Competitions page</Heading>
-            <SimpleGrid spacing={4} columns={["1", "2", "2"]} >
+            <SimpleGrid minChildWidth='400px' spacing='20px' >
 
                 {competitions.map(competition => <CompetitionCard key={competition.game_id} competition={competition} />)}
 

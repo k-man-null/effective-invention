@@ -4,17 +4,14 @@ import goldRaffleBg from '../assets/gold_raffle_background.png';
 
 
 const Ticket = ({ ticket }) => {
-  const { ticket_id, ticket_price, status } = ticket;
+  const { ticket_id, ticket_price, status, won } = ticket;
 
   let ticketColor = '';
-  switch (status) {
-    case 'live':
-      ticketColor = 'teal.500';
-      break;
-    case 'won':
+  switch (won) {
+    case true:
       ticketColor = 'green.500';
       break;
-    case 'lost':
+    case false:
       ticketColor = 'red.500';
       break;
     default:
@@ -54,7 +51,7 @@ const Ticket = ({ ticket }) => {
         </Box>
 
         {/* Barcode */}
-        <Box  ml={2}>
+        <Box ml={2}>
           <Text lineHeight={0.3} fontSize="sm" fontWeight="bold" fontFamily="body">ID: {ticket_id}</Text>
 
           <Text fontFamily='barcode' fontSize="50">vavckvavb</Text>
@@ -65,8 +62,9 @@ const Ticket = ({ ticket }) => {
       <Flex flex="1" flexDirection="column" justifyContent="space-between" p="1rem">
         {/* Status */}
         <Flex justifyContent="space-between" >
-          <Text fontSize="l" mr={2} fontWeight="bold" fontFamily="heading">{status.toUpperCase()}</Text>
-          { status === "won" ? <Button  onClick={handleClaim} colorScheme='teal'>CLAIM</Button> : "" }
+          {won ? <Text fontSize="l" mr={2} fontWeight="bold" fontFamily="heading">WON</Text> :
+            <Text fontSize="l" mr={2} fontWeight="bold" fontFamily="heading">LOST</Text>}
+          {won ? <Button onClick={handleClaim} colorScheme='teal'>CLAIM</Button> : ""}
         </Flex>
 
         {/* Message */}

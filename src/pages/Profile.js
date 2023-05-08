@@ -28,7 +28,8 @@ import {
     Badge,
     Spacer,
     Heading,
-    Alert
+    Alert,
+    Spinner
 } from '@chakra-ui/react';
 
 import { useState, useEffect, useRef } from "react";
@@ -53,6 +54,7 @@ function Profile() {
     const [user, setUser] = useState({});
     const [wallet, setWallet] = useState({});
     const [avatar, setAvatarSrc] = useState(); // state for avatar image source
+    const [isUploading, setIsUploading] = useState(false);
 
 
     const toast = useToast();
@@ -70,7 +72,10 @@ function Profile() {
 
     // Implement the handleAvatarChange function to handle file selection
     const handleAvatarChange = (event) => {
+
         const file = event.target.files[0];
+
+        setIsUploading(true);
         // You can now perform further processing on the selected file, such as uploading it to a server or displaying a preview of the image.
 
         //You can now perform further processing on the selected file, such as uploading it to a server or displaying a preview of the image.
@@ -79,14 +84,17 @@ function Profile() {
 
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
+
+            setIsUploading(false);
             return (
                 <Alert status="error" mt={4}>
-                    You can only upload JPG/PNG file!
+                    You can only upload JPG or PNG file!
                 </Alert>
             );
         }
 
         const reader = new FileReader();
+
         reader.onloadend = () => {
 
             const formData = new FormData();
@@ -99,13 +107,18 @@ function Profile() {
                     console.log('File uploaded successfully:', response.data);
                     // You can perform further actions, such as updating UI or displaying a success message
                     setAvatarSrc(reader.result);
+
+                    setIsUploading(false);
                 })
                 .catch(error => {
+                    setIsUploading(false);
                     // Handle error response from the server
                     console.error('File upload failed:', error);
                     // You can perform further actions, such as displaying an error message
+                    alert("Failed to upload avatar");
                 });
         };
+
         reader.readAsDataURL(file);
     };
 
@@ -237,12 +250,12 @@ function Profile() {
         axios.get(`${baseUrl}/session/verifyemail`, { withCredentials: true })
             .then((response) => {
 
-                alert(response.data);
+                console.log(response);
 
             })
             .catch((error) => {
 
-                alert(error.message);
+            console.log(error);
             })
     }
 
@@ -311,6 +324,13 @@ function Profile() {
                     onClick={() => avatarInputRef.current.click()}
                     cursor="pointer" />
                 <Spacer />
+                { isUploading ? <Spinner
+                    thickness='4px'
+                    speed='0.65s'
+                    emptyColor='gray.200'
+                    color='teal.500'
+                    size='l'
+                /> : ""}
                 <Text>Profile Photo</Text>
                 <Input
                     type="file"
