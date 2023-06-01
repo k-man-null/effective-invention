@@ -67,8 +67,8 @@ function Landing() {
           >
             <Center>
               <Stack>
-                <Text as='a' href="/public">Public Competitions</Text>
-                <Text as='a' href="/enter">Host a Raffle</Text>
+                <Text as='a' href="/public">Check for Products</Text>
+                <Text as='a' href="/enter">Showcase a Product</Text>
                 <Text as='a' href="#FAQS">FAQ</Text>
                 <Text as='a' href="#TOCS">Terms and Conditions</Text>
                 <Text as='a' href="/enter">Login</Text>
@@ -128,7 +128,7 @@ function Landing() {
                 textAlign='center'
                 marginBottom={['5']}
               >
-                Create winners everyday and make money doing it.
+               WindowShoppers, own your dream product today!!
 
               </Text>
               <Text
@@ -155,106 +155,19 @@ function Landing() {
                 }}
                 href={'enter'}
                 color='white'
-                as={'a'}>Host a raffle free</Button>
+                as={'a'}>Sell a product or service free</Button>
               <Button
                 size='lg'
                 variant='outline'
                 colorScheme='teal'
                 href="/app/competitions"
-                as={'a'}>View Public Raffles</Button>
+                as={'a'}>View Products</Button>
             </Stack>
           </Center>
 
         </Stack>
         {/* End Headline Page */}
-        <Stack
-          mt={['100px', '150px', '250px']}
-          marginX={['4', '7', 'auto']}
-          maxWidth={[null, null, '80%', '60%']}
-          mb='40px'
-        >
-          <Stack>
-            <Heading
-              textAlign='center'
-            >
-              How much is your audience worth?
-            </Heading>
-            <Text>
-              You took resources to build an audience, congratulations.
-              Would you want to calculate how much revenue you can generate by using our system?
-            </Text>
-          </Stack>
-
-        </Stack>
-        <Stack
-          mt={['100px', '150px', '250px']}
-          marginX={['4', '7', 'auto']}
-          maxWidth={[null, null, '80%', '60%']}
-
-        >
-          <Stack>
-            <Heading
-              textAlign='center'
-              marginBottom='64px'
-            >
-              What is the number of your audience?
-            </Heading>
-            <Box
-              mt='20px'
-              pl='4'
-              pr='6'
-              height='100px'
-              width='85%'
-            >
-              <Slider
-                onChange={(val) => {
-                  setSliderValue(val)
-                  setMinValue(val * 0.01)
-                  setMaxValue(val * 0.75)
-                }}
-                min={0}
-                max={50000000}
-                colorScheme='teal'
-              >
-                <SliderMark value={0} {...labelStyles}>
-                  0
-                </SliderMark>
-                <SliderMark value={50000000} {...labelStyles}>
-                  50M
-                </SliderMark>
-                <SliderMark
-                  value={sliderValue}
-                  textAlign='center'
-                  bg='teal.600'
-                  color='white'
-                  mt='-20'
-                  ml='-5'
-                  p='4'
-                >
-                  {sliderValue}
-                </SliderMark>
-                <SliderTrack>
-                  <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-
-            </Box>
-
-            {maxValue !== 0 ?
-              <Box
-                textAlign='center'
-              >
-                <Text>With such an audience you can generate</Text>
-                <Text>Between</Text>
-                <Text {...moneyStyles}>${minValue}</Text>
-                <Text>and</Text>
-                <Text {...moneyStyles}>${maxValue}</Text>
-              </Box> : ''
-            }
-          </Stack>
-
-        </Stack>
+        
 
         <Stack
           mt={['100px', '150px', '250px']}
@@ -269,8 +182,8 @@ function Landing() {
               How It Works
             </Heading>
             <Text>
-              Attention, creators. You can now engage your followers in a more exciting
-              way. Host competitions and let them win products you showcase on your channel.
+              Attention sellers. You can now engage your windowshoppers in a more exciting
+              way. Host your product or service on TikiTiki and make your potential customer's dream come true.
               This is a definate win win for everyone, but when done in a trustworthy and open way.
             </Text>
             <Flex flexDirection={['column', 'row']}>
@@ -331,7 +244,7 @@ function Landing() {
                 <Text>
                   The tickets will be sold to buyers, and one buyer will be picked randomly.
                   We encourage you to share the events on social media, or
-                  suggest it on your youtube channel.
+                  suggest it on your youtube channel or in your physical shop.
 
                 </Text>
 
@@ -437,32 +350,7 @@ function Landing() {
           </Stack>
 
         </Stack>
-        <Stack
-
-          marginX={['4', '7', 'auto']}
-          border='1px solid teal'
-          maxWidth={[null, null, '80%', '60%']}
-          mb='30px'
-          borderRadius='8'
-          p='4'
-        >
-          <Stack
-
-          >
-            <Heading
-              textAlign='center'
-            >
-              Sports
-            </Heading>
-            <Text>
-              Sports organizers place tickets as prizes, and the winners get free tickets.
-              Organizers get to use a credible and reliable platform
-              to host their competitions.
-            </Text>
-
-          </Stack>
-
-        </Stack>
+        
         <Stack
           marginX={['4', '7', 'auto']}
           border='1px solid teal'
@@ -489,31 +377,7 @@ function Landing() {
           </Stack>
 
         </Stack>
-        <Stack
-          marginX={['4', '7', 'auto']}
-          border='1px solid teal'
-          maxWidth={[null, null, '80%', '60%']}
-          mb='60px'
-          borderRadius='8'
-          p='4'
-        >
-          <Stack
-
-          >
-            <Heading
-              textAlign='center'
-            >
-              Schools
-            </Heading>
-            <Text>
-              Schools can also host competitions to raise funds for charitable
-              causes or for any other reason.
-
-            </Text>
-
-          </Stack>
-
-        </Stack>
+        
 
         {/* Start Why We are loved */}
         <Stack
@@ -612,7 +476,7 @@ function Landing() {
         {/* End Why we are loved  */}
 
         {/* Start Terms and Conditions */}
-        <Stack
+         {/*<Stack
           id="TOCS"
           mt={['30px']}
           marginX={['4', '7', 'auto']}
@@ -621,7 +485,7 @@ function Landing() {
           spacing={4}
 
         >
-          {/* TODO : create a toc route and its own component */}
+          
 
           <Heading as='h1' textAlign='center'>TERMS AND CONDITIONS</Heading>
 
@@ -918,7 +782,7 @@ function Landing() {
 
           </Text>
 
-        </Stack>
+        </Stack> */}
 
         {/* End terms and Conditions */}
 
@@ -958,7 +822,7 @@ function Landing() {
                     <h2>
                       <AccordionButton _expanded={{ bg: 'teal.400', color: 'white' }}>
                         <Box as="span" flex='1' textAlign='left'>
-                          Can I host a raffle in my business name?
+                          Can I host a competition in my business name?
                         </Box>
                         <AccordionIcon />
                       </AccordionButton>
@@ -984,13 +848,13 @@ function Landing() {
                     <h2>
                       <AccordionButton _expanded={{ bg: 'teal.400', color: 'white' }}>
                         <Box as="span" flex='1' textAlign='left'>
-                          What is the minimum ticket price I can charge for my raffle?
+                          What is the minimum ticket price I can charge for my competition?
                         </Box>
                         <AccordionIcon />
                       </AccordionButton>
                     </h2>
                     <AccordionPanel>
-                      The minimum price is $0.50 per ticket and a maximum of $100.00 per ticket.
+                      The minimum price is 50KSH per ticket and a maximum of 10,000 KSH per ticket.
                     </AccordionPanel>
                   </AccordionItem>
                   <AccordionItem>
@@ -1003,7 +867,7 @@ function Landing() {
                       </AccordionButton>
                     </h2>
                     <AccordionPanel>
-                      The minimum number of tickets is 200 and the maximum is 1 million tickets per competition.
+                      The minimum number of tickets is 50 and the maximum is 1000 tickets per competition.
                     </AccordionPanel>
                   </AccordionItem>
                   <AccordionItem>
@@ -1273,7 +1137,7 @@ function Landing() {
                 bgGradient: 'linear(to-r, teal.500, green.500)'
               }}
               color='white'
-              as={'a'}>Host a raffle free</Button>
+              as={'a'}>Sell a product free</Button>
           </Center>
 
 
