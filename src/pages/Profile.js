@@ -32,11 +32,13 @@ import {
     Spinner
 } from '@chakra-ui/react';
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { baseUrl } from "../urls";
 import axios from "axios";
 import TransactionList from "../Components/TransactionList";
 import TransactionAccordionList from "../Components/TransactionAccordionList";
+import { UserContext } from "../userContext";
+import { WalletContext } from "../walletContext";
 
 function Profile() {
 
@@ -51,10 +53,13 @@ function Profile() {
     const [isInvalidPhone, setIsInvalidPhone] = useState(false);
     const [isInvalidAmount, setIsinvalidAmount] = useState(false);
     const [transactions, setTransactions] = useState([]);
-    const [user, setUser] = useState({});
-    const [wallet, setWallet] = useState({});
+    //const [user, setUser] = useState({});
+    //const [wallet, setWallet] = useState({});
     const [avatar, setAvatarSrc] = useState(); // state for avatar image source
     const [isUploading, setIsUploading] = useState(false);
+
+    const user = useContext(UserContext);
+    const wallet = useContext(WalletContext);
 
 
     const toast = useToast();
@@ -196,45 +201,7 @@ function Profile() {
         axios.get(`${baseUrl}/session/transactionhistory`, { withCredentials: true })
             .then((response) => {
 
-                console.log(response);
-
-
                 setTransactions(response.data.results);
-
-            })
-            .catch((error) => {
-
-                alert(error.message);
-            })
-    }
-
-        , [])
-
-
-    useEffect(() => {
-        axios.get(`${baseUrl}/session/fullProfile`, { withCredentials: true })
-            .then((response) => {
-
-                console.log(response);
-
-                setUser(response.data);
-
-            })
-            .catch((error) => {
-
-                alert(error.message);
-            })
-    }
-
-        , [])
-
-    useEffect(() => {
-        axios.get(`${baseUrl}/session/wallet`, { withCredentials: true })
-            .then((response) => {
-
-                console.log(response);
-
-                setWallet(response.data);
 
             })
             .catch((error) => {
@@ -251,13 +218,16 @@ function Profile() {
             .then((response) => {
 
                 console.log(response);
+                showToast('success', response.data.message)
 
             })
             .catch((error) => {
 
-            console.log(error);
+                console.log(error);
             })
     }
+
+    const baseImageUrl = "https://storage.googleapis.com/tikitiki-compressed-images/compressed/"
 
 
     return (
@@ -320,11 +290,11 @@ function Profile() {
             <Flex mb='4'>
                 <Avatar size='md'
                     name={user.full_name}
-                    src={avatar || user.avatar}
+                    src={`${baseImageUrl}${user.avatar}`}
                     onClick={() => avatarInputRef.current.click()}
                     cursor="pointer" />
                 <Spacer />
-                { isUploading ? <Spinner
+                {isUploading ? <Spinner
                     thickness='4px'
                     speed='0.65s'
                     emptyColor='gray.200'

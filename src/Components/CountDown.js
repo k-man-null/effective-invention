@@ -13,7 +13,16 @@ const Countdown = ({ targetDate }) => {
   });
 
   function calculateTimeLeft() {
-    const difference = +new Date(targetDate) - +new Date();
+
+    const targetDateTime = new Date(targetDate);
+
+    const offsetInMillis = 3 * 60 * 60 * 1000; // East Africa Time offset: 3 hours
+    const adjustedDate = new Date(targetDateTime.getTime() - offsetInMillis);
+   
+    const currentDateTime = new Date(new Date());
+
+    const difference = adjustedDate.getTime() - currentDateTime.getTime();
+
     let timeLeft = {};
 
     if (difference > 0) {

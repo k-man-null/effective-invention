@@ -20,7 +20,7 @@ function Competitions({ type }) {
         const fetchData = async () => {
 
             console.log("I got called")
-            
+
             try {
                 setCompetitions([]);
                 if (type === "mylive") {
@@ -47,7 +47,7 @@ function Competitions({ type }) {
         <ChakraProvider theme={theme}>
 
             <Heading mb='4'>{type} Competitions page</Heading>
-            <SimpleGrid minChildWidth='400px' spacing='20px' >
+            <SimpleGrid spacing={4} columns={["1", "2", "2"]} >
 
                 {competitions.map(competition => <CompetitionCard key={competition.game_id} competition={competition} />)}
 

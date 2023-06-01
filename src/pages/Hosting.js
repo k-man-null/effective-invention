@@ -32,7 +32,7 @@ function Hosting() {
     const [description, setDescription] = useState('');
     const [PrizeDescription, setPrizeDescription] = useState('');
     const [TicketPrice, setTicketPrice] = useState(50);
-    const [TotalTickets, setTotalTickets] = useState(200);
+    const [TotalTickets, setTotalTickets] = useState(50);
     const [Delivery, setDelivery] = useState('host');
     const [prizeCategory, setPrizeCategory] = useState('');
     const [prizeLocation, setPrizeLocation] = useState({});
@@ -42,6 +42,7 @@ function Hosting() {
     const navigate = useNavigate();
 
     const prizeCategories = [
+        '---------',
         'experience',
         'travelling',
         'luxury',
@@ -104,29 +105,23 @@ function Hosting() {
     }
 
     const onChange = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
+
+        const filteredFileList = newFileList.filter(file => file.size <= MAX_FILE_SIZE);
+
+        setFileList(filteredFileList);
     }
 
     const onPreview = async (file) => {
-        let src = file.url;
-        if (!src) {
-            src = await new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file.originFileObj);
-                reader.onload = () => resolve(reader.result);
-            });
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
         }
-
-        const image = new Image();
-        image.src = src;
-        const imgWindow = window.open(src);
-        imgWindow?.document.write(image.outerHTML);
     }
 
-    const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+    const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
 
 
     const props = {
+
         onRemove: (file) => {
             const index = fileList.indexOf(file);
             const newFileList = fileList.slice();
@@ -134,11 +129,14 @@ function Hosting() {
             setFileList(newFileList);
         },
         beforeUpload: (file) => {
-            if (file.size > MAX_FILE_SIZE) {
-                message.error('File size must be smaller than 2MB');
-            }
 
-            setFileList([...fileList, file]);
+            console.log("Before upload");
+
+            const acceptedSize = file.size < MAX_FILE_SIZE;
+
+            if (!acceptedSize) {
+                showToast('error', `${file.name} is larger than 3 MB`);
+            }
 
             return false;
         },
@@ -147,6 +145,10 @@ function Hosting() {
         onChange,
         onPreview,
         accept: "image/png, image/jpeg"
+    };
+
+    const pad = (number) => {
+        return number < 10 ? "0" + number : number;
     };
 
 
@@ -224,6 +226,10 @@ function Hosting() {
         formData.append('prizeCategory', prizeCategory)
 
         fileList.forEach((file) => {
+            if (file.size > MAX_FILE_SIZE) {
+                showToast('error', 'Some images are larger than 3 Mb');
+                return;
+            }
 
             formData.append('images', file.originFileObj);
 
@@ -244,7 +250,7 @@ function Hosting() {
 
                 setLoading(false);
 
-                showToast("Error", "There was an error, please try again");
+                showToast("error", "There was an error, please try again");
 
             })
     }
@@ -336,13 +342,13 @@ function Hosting() {
 
                         <FormLabel marginY='4'> Upload the images of your prize (maximum 5 images)</FormLabel>
                         {/* TODO : Handle file uploads for multiple max 8 and Single */}
-                        <ImgCrop rotationSlider >
-                            <Upload
-                                {...props}
-                            >
-                                {fileList.length < 5 && <Text color='teal'>+ Upload</Text>}
-                            </Upload>
-                        </ImgCrop>
+
+                        <Upload
+                            {...props}
+                        >
+                            {fileList.length < 5 && <Text color='teal'>+ Upload</Text>}
+                        </Upload>
+
 
                         {/* Start TicketPrice input */}
 
@@ -378,13 +384,13 @@ function Hosting() {
 
                         <FormControl isRequired>
 
-                            <FormLabel>Total tickets to be sold (max 1 Million, minimum 200)</FormLabel>
+                            <FormLabel>Total tickets to be sold (max 1000, minimum 50)</FormLabel>
 
                             <NumberInput
                                 marginY='4'
                                 value={TotalTickets}
-                                defaultValue={200}
-                                min={200} max={1000000}
+                                defaultValue={50}
+                                min={50} max={1000}
                                 onChange={(value) => setTotalTickets(Number(value))}
                             >
                                 <NumberInputField />
@@ -446,7 +452,10 @@ function Hosting() {
                             <Input
                                 marginY='4'
                                 type="datetime-local"
-                                onChange={(event) => setEndDate(event.target.value)}>
+                                onChange={(event) => {
+                                    const timestamp = event.target.valueAsNumber;
+                                    setEndDate(timestamp);
+                                }}>
                             </Input>
 
                         </FormControl>

@@ -18,6 +18,8 @@ import Ticket from './pages/Ticket';
 import Competitions from './pages/Competitions'
 import Competition from './pages/Competition';
 import Winners from './pages/Winners';
+import ResetPassword from './pages/ResetPassword';
+import Affiliate from './pages/Affiliate';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -29,6 +31,7 @@ root.render(
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='/enter' element={<Login />} />
+        <Route path='/forgotpassword/:token' element={<ResetPassword />} />
         <Route path='/app' element={<App />} >
           <Route path='deposit' element={<Deposit />} />
           <Route path='host' element={<Hosting />} />
@@ -39,6 +42,8 @@ root.render(
           <Route path='competitions/:competitionId' element={<Competition />} />
           <Route path='mylive' element={<Competitions type="mylive"/>}/>
           <Route path='myended' element={<Competitions type="myended"/>}/>
+          <Route path='affiliates' element={<Affiliate />} />
+
         </Route>
         <Route path='winners' element={<Winners />} />
         <Route path='*' element={<Error />} />

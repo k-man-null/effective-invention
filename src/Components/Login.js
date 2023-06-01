@@ -28,8 +28,6 @@ export default function Login(props) {
 
         axios.post(`${baseUrl}/users/login`, credential, { withCredentials: true })
             .then((response) => {
-
-                const user = response.data.user
                 
                 navigate("/app")
 
@@ -112,7 +110,7 @@ export default function Login(props) {
     return (
         <Formik
             initialValues={{
-                email: 'johnkibogoyos@gmail.com',
+                email: '',
                 password: ''
             }}
 

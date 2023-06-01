@@ -4,7 +4,7 @@ import {
     FormErrorMessage,
     Input,
     Button,
-    Text
+    useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ import { baseUrl } from "../urls";
 
 export default function ForgotPass(props) {
 
-    const navigate = useNavigate()
+    const toast = useToast()
 
     const handleForgotPassword = (values, actions) => {
 
@@ -24,27 +24,35 @@ export default function ForgotPass(props) {
 
 
         const credential = { ...values }
-        
 
-        axios.post(`${baseUrl}/user/signin`, credential, { withCredentials: true })
+
+        axios.post(`${baseUrl}/users/recoverpassword`, credential, { withCredentials: true })
             .then((response) => {
-
-                const user = response.data.user
-                //alert(`Logged in successfully as ${user.username}`)
-
-                // const token = response.data.token
-
-                // localStorage.setItem("user", JSON.stringify(user))
-                // localStorage.setItem("token", token)
-
                 
+                actions.setSubmitting(false);
 
+                toast({
+                    title: 'Success',
+                    description:"We have sent you an email with instructions",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                });
+        
             })
             .catch((error) => {
 
+                actions.setSubmitting(false);
+
                 if (error.response) {
 
-                    console.log(error.response)
+                    toast({
+                        title: 'Error',
+                        description:error.response.data.message,
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    });
 
                 } else if (error.request) {
                     console.log(error)
@@ -69,7 +77,7 @@ export default function ForgotPass(props) {
     return (
         <Formik
             initialValues={{
-                email: 'johnkibogoyos@gmail.com'
+                email: ''
             }}
 
             onSubmit={handleForgotPassword}
@@ -77,7 +85,7 @@ export default function ForgotPass(props) {
         >
             {(props) => (
                 <Form>
-                
+
 
                     <Field name='email' validate={validateEmail}>
                         {({ field, form }) => (
@@ -99,7 +107,7 @@ export default function ForgotPass(props) {
                         isLoading={props.isSubmitting}
                     >Submit Email</Button>
 
-                
+
                 </Form>
             )}
 

@@ -40,6 +40,9 @@ import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { baseUrl } from "./urls";
+import { UserContext } from "./userContext";
+import { WalletContext } from "./walletContext";
+
 function App() {
 
   const navigate = useNavigate();
@@ -53,8 +56,8 @@ function App() {
 
     axios.get(`${baseUrl}/session/logout`, { withCredentials: true })
       .then((response) => {
-        setUser({});
 
+        setUser({});
         navigate("/");
 
       })
@@ -65,7 +68,6 @@ function App() {
       })
 
   }
-
 
   useEffect(() => {
     axios.get(`${baseUrl}/session/minProfile`, { withCredentials: true })
@@ -101,7 +103,6 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-
 
       <Stack height="100vh" spacing={0} width="100vw" overflowX='hidden' overflowY='hidden'>
         <Drawer
@@ -221,6 +222,23 @@ function App() {
 
                 <Divider />
 
+
+
+                <Stack paddingLeft='4'>
+                  <Heading as='h2' size="md">Affiliate Cash</Heading>
+                  <Link to="affiliates" onClick={onClose}>
+                    <Stack direction="row">
+                      <Center>
+                        <AttachmentIcon marginRight="2"></AttachmentIcon>
+                        <Text>My Account</Text>
+                      </Center>
+                    </Stack>
+                  </Link>
+
+                </Stack>
+
+                <Divider />
+
                 <Stack paddingLeft='4' onClick={onClose}>
                   <Button
                     colorScheme='teal'
@@ -282,7 +300,7 @@ function App() {
               height='100%'
             >
               <Stack>
-                
+
                 <Center height='60px'>
                   <Heading
                     color='teal.900'
@@ -381,6 +399,20 @@ function App() {
                 </Stack>
 
                 <Divider />
+                <Stack paddingLeft='4'>
+                  <Heading as='h2' size="md">Affiliate Cash</Heading>
+                  <Link to="affiliates">
+                    <Stack direction="row">
+                      <Center>
+                        <AttachmentIcon marginRight="2"></AttachmentIcon>
+                        <Text>My Account</Text>
+                      </Center>
+                    </Stack>
+                  </Link>
+
+                </Stack>
+
+                <Divider />
 
                 <Stack paddingLeft='4'>
                   <Button
@@ -400,7 +432,11 @@ function App() {
           </Show>
           {/* The main part of the app i.e outlet for routing */}
           <Box height='100%' width='1000px' padding='4' overflowY='scroll'>
-            <Outlet />
+            <UserContext.Provider value={user}>
+              <WalletContext.Provider value={wallet}>
+                <Outlet />
+              </WalletContext.Provider>
+            </UserContext.Provider>
           </Box>
         </Stack>
 

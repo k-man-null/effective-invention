@@ -3,6 +3,7 @@ import theme from "../theme";
 import {
   ChakraProvider,
   Box,
+  Flex,
   Text,
   Stack,
   Button,
@@ -86,7 +87,7 @@ function Landing() {
           width='100%'
           zIndex='100'
           direction='horizontal'
-         >
+        >
           <Center h='60px'>
             <HamburgerIcon
               color='teal'
@@ -128,13 +129,14 @@ function Landing() {
                 marginBottom={['5']}
               >
                 Create winners everyday and make money doing it.
+
               </Text>
               <Text
                 fontSize={['18']}
                 textAlign='center'
               >
-                Host and invite players to your competition. We pick the winner randomly for you.
-                You give the winner the prize, then you receive 75% of the ticket sales.
+                Simply, we are an Escrow service providing trust and credibility in public competitions.
+
               </Text>
             </Stack>
           </Center>
@@ -165,7 +167,6 @@ function Landing() {
 
         </Stack>
         {/* End Headline Page */}
-
         <Stack
           mt={['100px', '150px', '250px']}
           marginX={['4', '7', 'auto']}
@@ -185,9 +186,6 @@ function Landing() {
           </Stack>
 
         </Stack>
-
-        {/* Start Part 1 */}
-
         <Stack
           mt={['100px', '150px', '250px']}
           marginX={['4', '7', 'auto']}
@@ -224,7 +222,6 @@ function Landing() {
                 <SliderMark value={50000000} {...labelStyles}>
                   50M
                 </SliderMark>
-
                 <SliderMark
                   value={sliderValue}
                   textAlign='center'
@@ -258,6 +255,118 @@ function Landing() {
           </Stack>
 
         </Stack>
+
+        <Stack
+          mt={['100px', '150px', '250px']}
+          marginX={['4', '7', 'auto']}
+          maxWidth={[null, null, '80%', '60%']}
+          mb='40px'
+        >
+          <Stack>
+            <Heading
+              textAlign='center'
+            >
+              How It Works
+            </Heading>
+            <Text>
+              Attention, creators. You can now engage your followers in a more exciting
+              way. Host competitions and let them win products you showcase on your channel.
+              This is a definate win win for everyone, but when done in a trustworthy and open way.
+            </Text>
+            <Flex flexDirection={['column', 'row']}>
+
+              <Stack border='1px solid teal' padding='4' m='4'>
+                <Heading
+                  textAlign='center'
+                >
+                  Step 1. Create an Account.
+                </Heading>
+                <Text>
+                  Click the signup button and provide the necessary information.
+                  The registration is simple and easy,
+                  no documents needed.
+                </Text>
+
+              </Stack>
+              <Spacer />
+
+              <Stack border='1px solid teal' padding='4' m='4'>
+                <Heading
+                  textAlign='center'
+                >
+                  Step 2. Showcase Your Products/Services
+                </Heading>
+                <Text>
+                  Go to host a competition on your profile menu.
+                  Fill out the form, include a few pictures.
+                  Provide the number of tickets and the price of each ticket.
+                </Text>
+
+              </Stack>
+
+              <Spacer />
+
+              <Stack border='1px solid teal' padding='4' m='4'>
+                <Heading
+                  textAlign='center'
+                >
+                  Step 3. Set the Deadline
+                </Heading>
+                <Text>
+                  When filling the form, set the deadline.
+                  The deadline is a time in the future when the sale ends.
+                  When this deadline is reached, the giving process begins and all
+                  sales end.
+                </Text>
+
+              </Stack>
+              <Spacer />
+
+              <Stack border='1px solid teal' padding='4' m='4'>
+                <Heading
+                  textAlign='center'
+                >
+                  Step 4. Engage with buyers.
+                </Heading>
+                <Text>
+                  The tickets will be sold to buyers, and one buyer will be picked randomly.
+                  We encourage you to share the events on social media, or
+                  suggest it on your youtube channel.
+
+                </Text>
+
+              </Stack>
+
+              <Spacer />
+
+              <Stack border='1px solid teal' padding='4' m='4'>
+                <Heading
+                  textAlign='center'
+                >
+                  Step 5. Prize awarding.
+                </Heading>
+                <Text>
+                  Get ready for the thrilling prize awarding process!
+                  The winner will be selected either when the deadline
+                  specified by the host is reached or when all tickets are sold,
+                  whichever comes first.
+                  This ensures a sense of excitement and urgency for all participants.
+
+                  When the prize is awarded, the revenue generated from ticket sales
+                  will be given to the host. It's important to note that the host will
+                  receive this revenue if they provide the promised prize to the lucky winner. This creates a win-win situation,
+                  encouraging hosts to fulfill their commitment and deliver the prize.
+
+                </Text>
+
+              </Stack>
+
+            </Flex>
+          </Stack>
+
+        </Stack>
+
+
         {/* End Part 1 */}
         <Stack
           id="who"
@@ -296,7 +405,7 @@ function Landing() {
               Brands
             </Heading>
             <Text>
-              Brands use TikiTiki to host credible competitions where the 
+              Brands use TikiTiki to host credible competitions where the
               participants are guaranteed fairness.
             </Text>
 
@@ -320,8 +429,8 @@ function Landing() {
               Influencers
             </Heading>
             <Text>
-              Influencers take advantage of their audience to generate 
-              extra income for both the audience and themselves. TikiTiki 
+              Influencers take advantage of their audience to generate
+              extra income for both the audience and themselves. TikiTiki
               simplifies competitions for influencers in a simple way.
             </Text>
 
@@ -347,7 +456,7 @@ function Landing() {
             </Heading>
             <Text>
               Sports organizers place tickets as prizes, and the winners get free tickets.
-              Organizers get to use a credible and reliable platform 
+              Organizers get to use a credible and reliable platform
               to host their competitions.
             </Text>
 
@@ -373,7 +482,7 @@ function Landing() {
             <Text>
               Businesses generate more buzz about their products and services
               by hosting public and credible competitions with us.
-              Businesses provide their services or products as prizes in the 
+              Businesses provide their services or products as prizes in the
               competition.
             </Text>
 

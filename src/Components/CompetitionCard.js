@@ -13,10 +13,12 @@ import CountDown from "../Components/CountDown";
 
 export default function CompetitionCard({ competition }) {
 
+    const baseImageUrl = "https://storage.googleapis.com/tikitiki-compressed-images/compressed/"
+
 
     return (
 
-        <LinkBox as='article' maxW='sm' p='5' borderWidth='1px' rounded='md'>
+        <LinkBox as='article' maxW='sm' rounded='md'>
 
             <Stack
                 border="1px solid pink"
@@ -28,7 +30,7 @@ export default function CompetitionCard({ competition }) {
                 </LinkOverlay>
                 <Image
                     objectFit='cover'
-                    src={`${competition?.prize_images[0]}`}
+                    src={`${baseImageUrl}thumb_${competition?.prize_images[0]}`}
                     alt='Caffe Latte'
                     height={"150px"}
                     width="100%"

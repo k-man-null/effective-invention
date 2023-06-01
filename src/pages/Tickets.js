@@ -27,27 +27,22 @@ function Tickets() {
 
             })
             .catch((error) => {
-
-                alert(error.message);
+                setLoading(false);
             })
     }
-
         , [])
-
 
     return (
         <ChakraProvider theme={theme}>
 
-            <Heading mb='4'>Tickets Page</Heading>
+            <Heading mb='4'>Your Tickets</Heading>
             {loading ? <Loading /> :
                 <SimpleGrid spacing={4} columns={["1", "2", "2"]} >
-
 
                     {tickets?.map(ticket => <Ticket ticket={ticket} key={ticket.ticket_id} />)}
 
                 </SimpleGrid>
             }
-
 
         </ChakraProvider>
     )

@@ -203,11 +203,11 @@ export default function Register(props) {
 
         <Formik
             initialValues={{
-                first_name: 'John',
-                last_name: 'Kibogoyo',
-                user_name: 'JKibogs',
-                email: 'johnkibogoyos@gmail.com',
-                phone: '254722123456',
+                first_name: '',
+                last_name: '',
+                user_name: '',
+                email: '',
+                phone: '',
                 password: ''
             }}
 
