@@ -86,7 +86,11 @@ function calcRevenue(game) {
 
         const ticketPrice = parseInt(game.ticket_price);
 
+        //account for commisions too.
+
         const revenue = 0.75 * ticketsSold * ticketPrice;
+
+        
 
         return revenue;
 

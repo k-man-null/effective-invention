@@ -119,7 +119,6 @@ function Hosting() {
 
     const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
 
-
     const props = {
 
         onRemove: (file) => {
@@ -150,7 +149,6 @@ function Hosting() {
     const pad = (number) => {
         return number < 10 ? "0" + number : number;
     };
-
 
     const create = (event) => {
 

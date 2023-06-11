@@ -61,7 +61,8 @@ const Ticket = ({ ticket }) => {
 
   function handleClaim() {
     if (contact.length < 10) {
-      console.log("Enter a valid contact")
+      showToast('warning',"Enter a valid contact");
+      return;
     }
 
     const data = {
@@ -72,14 +73,12 @@ const Ticket = ({ ticket }) => {
     axios.post(`${baseUrl}/claim`, data, { withCredentials: true })
       .then((response) => {
         onClose()
-        showToast("success", "response.data.message")
+        showToast("success", response.data.message);
       })
       .catch((error) => {
         console.log(error.response)
-        showToast("error", "error.response.data")
+        showToast("error", error.response.data)
       })
-
-
 
   }
 
