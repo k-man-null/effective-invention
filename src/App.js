@@ -232,12 +232,12 @@ function App() {
 
 
                 <Stack paddingLeft='4'>
-                  <Heading as='h2' size="md">Affiliate Cash</Heading>
+                  <Heading as='h2' size="md">Affiliate Earnings</Heading>
                   <Link to="affiliates" onClick={onClose}>
                     <Stack direction="row">
                       <Center>
                         <AttachmentIcon marginRight="2"></AttachmentIcon>
-                        <Text>My Account</Text>
+                        <Text>My Affiliate Account</Text>
                       </Center>
                     </Stack>
                   </Link>
@@ -426,12 +426,12 @@ function App() {
 
                 <Divider />
                 <Stack paddingLeft='4'>
-                  <Heading as='h2' size="md">Affiliate Cash</Heading>
+                  <Heading as='h2' size="md">Affiliate Earnings</Heading>
                   <Link to="affiliates">
                     <Stack direction="row">
                       <Center>
                         <AttachmentIcon marginRight="2"></AttachmentIcon>
-                        <Text>My Account</Text>
+                        <Text>My Affiliate Account</Text>
                       </Center>
                     </Stack>
                   </Link>
