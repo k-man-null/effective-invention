@@ -43,6 +43,7 @@ function Hosting() {
 
     const prizeCategories = [
         '---------',
+        'drinks',
         'experience',
         'travelling',
         'luxury',
@@ -359,6 +360,7 @@ function Hosting() {
                                 marginY='4'
                                 value={TicketPrice}
                                 onChange={(event) => setTicketPrice(Number(event.target.value))}>
+                                <option value='20'>20</option>  
                                 <option value='50'>50</option>
                                 <option value='100'>100</option>
                                 <option value='200'>200</option>
@@ -382,13 +384,21 @@ function Hosting() {
 
                         <FormControl isRequired>
 
+<<<<<<< HEAD
                             <FormLabel>Total tickets to be sold (max 1000, minimum 50)</FormLabel>
+=======
+                            <FormLabel>Total tickets to be sold (max 100000, minimum 20)</FormLabel>
+>>>>>>> ac2f1a7 (Now 20 ticket price minimum and minimum 20 tickets)
 
                             <NumberInput
                                 marginY='4'
                                 value={TotalTickets}
                                 defaultValue={50}
+<<<<<<< HEAD
                                 min={50} max={1000}
+=======
+                                min={20} max={100000}
+>>>>>>> ac2f1a7 (Now 20 ticket price minimum and minimum 20 tickets)
                                 onChange={(value) => setTotalTickets(Number(value))}
                             >
                                 <NumberInputField />
