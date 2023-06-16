@@ -169,7 +169,7 @@ function Affiliate() {
                 <Stat>
                     <StatLabel>Total Earning (KSH)</StatLabel>
                     <StatNumber>
-                        {earnings.settledEarnings}
+                        {/* {earnings.settledEarnings} */} 12342
                     </StatNumber>
 
                 </Stat>
@@ -177,7 +177,7 @@ function Affiliate() {
                 <Stat>
                     <StatLabel>Pending Earning (KSH)</StatLabel>
                     <StatNumber>
-                        {earnings.pendingEarnings}
+                        {/* {earnings.pendingEarnings} */}45365 
                     </StatNumber>
 
                 </Stat>
