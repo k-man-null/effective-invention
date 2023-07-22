@@ -96,7 +96,7 @@ function Landing() {
           maxWidth={[null, null, '80%', '60%']}
         >
           <Center
-          >
+          >z
             <Stack>
               <Text
                 bgGradient='linear(to-r, teal.500, green.500)'
@@ -107,7 +107,7 @@ function Landing() {
                 textAlign='center'
                 marginBottom={['5']}
               >
-               WindowShoppers, own your dream product today!!
+               Make money hosting raffles
 
               </Text>
               <Text

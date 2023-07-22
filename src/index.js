@@ -20,6 +20,8 @@ import Competition from './pages/Competition';
 import Winners from './pages/Winners';
 import ResetPassword from './pages/ResetPassword';
 import Affiliate from './pages/Affiliate';
+import Giveaway from './pages/Giveaway';
+import PublicGiveaway from './pages/PublicGiveaway';
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
@@ -43,8 +45,8 @@ root.render(
           <Route path='mylive' element={<Competitions type="mylive"/>}/>
           <Route path='myended' element={<Competitions type="myended"/>}/>
           <Route path='affiliates' element={<Affiliate />} />
-
         </Route>
+        <Route path='/giveaways/:giveawayId' element={<PublicGiveaway />} />
         <Route path='winners' element={<Winners />} />
         <Route path='*' element={<Error />} />
       </Routes>
