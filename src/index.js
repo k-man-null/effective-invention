@@ -1,11 +1,16 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
+import reportWebVitals from './reportWebVitals';
+
 import {
   BrowserRouter,
   Routes,
   Route,
 } from 'react-router-dom';
+import ReactGA from "react-ga4";
+
+
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import App from './App';
@@ -27,6 +32,7 @@ import store from "./redux/store"
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
+ReactGA.initialize("G-9F53TL6YZE");
 
 root.render(
   <Provider store={store}>
@@ -57,3 +63,12 @@ root.render(
   </StrictMode>
   </Provider>
 );
+
+const SendAnalytics = ()=> {
+  ReactGA.send({
+    hitType: "pageview",
+    page: window.location.pathname,
+  });
+}
+
+reportWebVitals(SendAnalytics);
