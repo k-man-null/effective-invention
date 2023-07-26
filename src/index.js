@@ -69,6 +69,8 @@ const SendAnalytics = ()=> {
     hitType: "pageview",
     page: window.location.pathname,
   });
+
+  console.log(window.location.pathname);
 }
 
 reportWebVitals(SendAnalytics);
