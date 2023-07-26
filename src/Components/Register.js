@@ -17,17 +17,19 @@ export default function Register(props) {
 
     const register = (values, actions) => {
 
-        const user = { ...values }
+        const phoneWith254 = "254" + values.phone.slice(1)
 
-        actions.isSubmitting = false
-        actions.isValidating = false
+        const user = { ...values, phone: phoneWith254 }
+
+        console.log(user)
+
+        actions.setSubmitting(true)
+        //actions.isValidating = false
 
         axios.post(`${baseUrl}/users/register`, user, { withCredentials: true })
             .then((response) => {
 
-                console.log(response);
-
-                actions.isSubmitting = false
+                actions.setSubmitting(false)
 
                 props.setTab(1);
 
@@ -42,9 +44,7 @@ export default function Register(props) {
             })
             .catch((error) => {
 
-                console.log(error);
-
-                actions.setSubmitting(false)
+                actions.setSubmitting(false);
 
                 if (error.response) {
 
@@ -167,13 +167,9 @@ export default function Register(props) {
             error = "Phone number is required"
 
         } else {
-            if (phone.slice(0, 3) !== "254") {
+        
 
-                error = "Start the number with 254"
-
-            }
-
-            if (phone.length !== 12) {
+            if (phone.length !== 10) {
 
                 error = "Enter a valid phone number"
 
@@ -211,7 +207,7 @@ export default function Register(props) {
                 last_name: '',
                 user_name: '',
                 email: '',
-                phone: '',
+                phone: '0722123456',
                 password: ''
             }}
 
