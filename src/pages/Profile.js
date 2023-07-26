@@ -59,7 +59,7 @@ function Profile() {
     const [avatar, setAvatarSrc] = useState(); // state for avatar image source
     const [isUploading, setIsUploading] = useState(false);
 
-    
+
     const toast = useToast();
 
     const showToast = (status, message) => {
@@ -97,7 +97,7 @@ function Profile() {
         reader.onloadend = () => {
 
             const formData = new FormData();
-            formData.append('avatar', file); 
+            formData.append('avatar', file);
 
             // Send the FormData object to the server using Axios or any other network request library
             axios.post(`${baseUrl}/session/avatar`, formData, { withCredentials: true })
@@ -131,28 +131,28 @@ function Profile() {
             error = "Phone number is required"
 
         } else {
-            if (phone.slice(0, 3) !== "254") {
 
-                error = "Start the number with 254"
 
-            }
-
-            if (phone.length !== 12) {
-                if (phone.trim().length !== 10) {
-
-                    error = "Enter a valid phone number"
-
-                }
-            }
-
-            return error;
+            error = "Start the number with 254"
 
         }
+
+        if (phone.length !== 12) {
+            if (phone.trim().length !== 10) {
+
+                error = "Enter a valid phone number"
+
+            }
+        }
+
+        return error;
+
     }
+
 
     function depositFunds() {
 
-        if (amount < 10) {
+        if (amount < 50) {
 
             setIsinvalidAmount(true);
             setAmountError("Minimum deposit is KSH 50");
@@ -178,7 +178,7 @@ function Profile() {
 
         const data = {
             amount: amount,
-            phone_number: phone_number
+            phone_number: "254" + phone_number.slice(1)
         };
 
         axios.post(`${baseUrl}/session/deposit`, data, { withCredentials: true })
@@ -262,7 +262,7 @@ function Profile() {
                                     setPhoneNumber(event.target.value);
                                 }}
                                 value={phone_number}
-                                placeholder="254722000000"
+                                placeholder="0722123456"
                                 type="text"
                             >
                             </Input>
