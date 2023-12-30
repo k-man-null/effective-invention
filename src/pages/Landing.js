@@ -102,8 +102,7 @@ function Landing() {
           marginX={['4', '7', 'auto']}
           maxWidth={[null, null, '80%', '60%']}
         >
-          <Center
-          >z
+          <Center>
             <Stack>
               <Text
                 bgGradient='linear(to-r, teal.500, green.500)'
