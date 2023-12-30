@@ -28,18 +28,17 @@ import {
 
 } from "@chakra-ui/react";
 
-
-
 import Error from "../pages/Error"
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 import axios from "axios";
 
 import CountDown from "../Components/CountDown";
 import { baseUrl } from "../urls";
-import { UserContext } from "../userContext";
+import { baseImageUrl } from "../urls";
+import { useSelector } from "react-redux";
 
 
 async function getCompetition(game_id) {
@@ -86,7 +85,11 @@ function calcRevenue(game) {
 
         const ticketPrice = parseInt(game.ticket_price);
 
+        //account for commisions too.
+
         const revenue = 0.75 * ticketsSold * ticketPrice;
+
+        
 
         return revenue;
 
@@ -141,8 +144,8 @@ export default function Competition() {
             isClosable: true,
         });
     }
-    const user = useContext(UserContext);
-
+    const { user } = useSelector((state) => state.user)
+    
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const [ticketPurchase, setTicketPurchase] = useState(1);
@@ -313,7 +316,6 @@ export default function Competition() {
 
     }
 
-    const baseImageUrl = "https://storage.googleapis.com/tikitiki-compressed-images/compressed/"
 
     return (
 
@@ -390,7 +392,7 @@ export default function Competition() {
                     <Heading mb='2' size="lg" color='teal.400'>{competition?.title}</Heading>
 
                     <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                        <Avatar name={creator?.name} src={`${baseImageUrl}thumb_${creator?.avatar}`} />
+                        <Avatar name={creator?.name} src={`${baseImageUrl}${creator?.avatar}`} />
 
                         <Box>
                             <Heading size='sm'>{creator?.name}</Heading>
@@ -425,7 +427,13 @@ export default function Competition() {
 
                     <Flex>
 
-                        <Button  isDisabled={competition?.status === "ended"} onClick={onOpen} w="100%" colorScheme='teal'>Enter</Button>
+                        <Button 
+                           isDisabled={competition?.status === "ended"}
+                           onClick={onOpen}
+                           w="100%"
+                           colorScheme='teal'>
+                           Enter
+                        </Button>
 
                     </Flex>
 

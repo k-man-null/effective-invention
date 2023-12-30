@@ -26,7 +26,7 @@ import theme from "../theme";
 import { baseUrl } from "../urls";
 import Loading from "../Components/Loading";
 
-function Hosting() {
+function Giveaway() {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -61,6 +61,14 @@ function Hosting() {
         'clothing',
         'other'
 
+    ]
+
+    const tasks = [
+        '----------',
+        'findeasteregg',
+        'giveemail',
+        'followpage',
+        'subscribetoyoutubetchannel'      
     ]
 
     const toast = useToast();
@@ -257,7 +265,7 @@ function Hosting() {
 
         <ChakraProvider theme={theme}>
 
-            <Heading>Host a Competition</Heading>
+            <Heading>Create a Giveaway</Heading>
 
             <Divider marginY='4' />
 
@@ -268,7 +276,7 @@ function Hosting() {
                         onSubmit={create}>
                         {/* Title input */}
                         <FormControl isRequired>
-                            <FormLabel>Title of the Competition</FormLabel>
+                            <FormLabel>Title of the Giveaway</FormLabel>
                             <Input
                                 marginY='4'
                                 placeholder="e.g. Win my Merchandise"
@@ -287,7 +295,7 @@ function Hosting() {
 
                         <FormControl isRequired>
 
-                            <FormLabel>A not so long description of the competition</FormLabel>
+                            <FormLabel>A not so long description of the Giveaway</FormLabel>
                             <Textarea
                                 marginY='4'
                                 placeholder="e.g Win this Merch before the end of March,... etc"
@@ -348,60 +356,17 @@ function Hosting() {
                         </Upload>
 
 
-                        {/* Start TicketPrice input */}
+                        {/* Tasks such as Install an app, subscribe to channel, 
+                        
+                                follow page, share email, subscribe to newslletter or
+                                find an easter egg
 
-                        <Divider marginY='4' />
 
-                        <FormControl isRequired>
-
-                            <FormLabel>Price per Ticket</FormLabel>
-                            <Select
-                                marginY='4'
-                                value={TicketPrice}
-                                onChange={(event) => setTicketPrice(Number(event.target.value))}>
-                                <option value='50'>50</option>
-                                <option value='100'>100</option>
-                                <option value='200'>200</option>
-                                <option value='250'>250</option>
-                                <option value='500'>500</option>
-                                <option value='1000'>1000</option>
-                                <option value='2000'>2000</option>
-                                <option value='3000'>3000</option>
-                                <option value='4000'>4000</option>
-                                <option value='5000'>5000</option>
-                                <option value='10000'>10000</option>
-
-                            </Select>
-                        </FormControl>
-
-                        {/* End TicketPrice input */}
-
-                        <Divider marginY='4' />
-
-                        {/* Start Number of Tickets input */}
-
-                        <FormControl isRequired>
-
-                            <FormLabel>Total tickets to be sold (max 1000, minimum 50)</FormLabel>
-
-                            <NumberInput
-                                marginY='4'
-                                value={TotalTickets}
-                                defaultValue={50}
-                                min={50} max={1000}
-                                onChange={(value) => setTotalTickets(Number(value))}
-                            >
-                                <NumberInputField />
-                                <NumberInputStepper>
-                                    <NumberIncrementStepper />
-                                    <NumberDecrementStepper />
-                                </NumberInputStepper>
-                            </NumberInput>
-                        </FormControl>
-
-                        {/* End Number of Tickets input */}
-
-                        <Divider marginY='4' />
+                                TODO: Implemnt a dynamic form where the user creates a 
+                                task which the participant will use to gain points
+                                for the giveaway.
+                        */}
+                        
 
                         <FormControl isRequired>
 
@@ -415,31 +380,6 @@ function Hosting() {
                                 <option value='collect'>Receive at Business Premise </option>
                             </Select>
                         </FormControl>
-
-                        {/* End TicketPrice input */}
-
-                        <Divider marginY='4' />
-
-                        <FormLabel>Location, (Optional)</FormLabel>
-                        <Text>
-                            This option is helpful if the location of your prize
-                            will be useful to locals, e.g when the prize is an event ticket
-                            or when the prize is a piece of real estate.
-                            This location will be shown to entrants,
-
-                        </Text>
-                        <Text color='teal.500' fontWeight='extrabold'>
-                            make sure you are
-                            at the location of the prize.
-                        </Text>
-                        <Button
-                            marginY='4'
-                            colorScheme='red'
-                            onClick={getLocation}>
-                            Get the location of the Competition
-                        </Button>
-
-                        {/* End TicketPrice input */}
 
                         <Divider marginY='4' />
 
@@ -467,7 +407,7 @@ function Hosting() {
                             width='100%'
                             colorScheme='teal'
                             mt='4'
-                            type="submit">Launch Competition</Button>
+                            type="submit">Launch Giveaway</Button>
                     </form>
                 </Box>}
         </ChakraProvider>
@@ -475,4 +415,4 @@ function Hosting() {
     );
 }
 
-export default Hosting;
+export default Giveaway;

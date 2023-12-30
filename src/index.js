@@ -20,11 +20,16 @@ import Competition from './pages/Competition';
 import Winners from './pages/Winners';
 import ResetPassword from './pages/ResetPassword';
 import Affiliate from './pages/Affiliate';
+import Giveaway from './pages/Giveaway';
+import PublicGiveaway from './pages/PublicGiveaway';
+import { Provider } from 'react-redux';
+import store from "./redux/store"
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
 root.render(
+  <Provider store={store}>
   <StrictMode>
     <BrowserRouter>
       <ColorModeScript />
@@ -43,11 +48,12 @@ root.render(
           <Route path='mylive' element={<Competitions type="mylive"/>}/>
           <Route path='myended' element={<Competitions type="myended"/>}/>
           <Route path='affiliates' element={<Affiliate />} />
-
         </Route>
+        <Route path='/giveaways/:giveawayId' element={<PublicGiveaway />} />
         <Route path='winners' element={<Winners />} />
         <Route path='*' element={<Error />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
+  </Provider>
 );

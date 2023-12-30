@@ -25,6 +25,8 @@ export default function Register(props) {
         axios.post(`${baseUrl}/users/register`, user, { withCredentials: true })
             .then((response) => {
 
+                console.log(response);
+
                 actions.isSubmitting = false
 
                 props.setTab(1);
@@ -39,6 +41,8 @@ export default function Register(props) {
 
             })
             .catch((error) => {
+
+                console.log(error);
 
                 actions.setSubmitting(false)
 

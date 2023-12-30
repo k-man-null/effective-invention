@@ -1,3 +1,4 @@
-const baseUrl = "https://tiki-dev-server-7tzn6tu5vq-uc.a.run.app"
+const baseUrl = "https://fluffy-memory-jo4bdgoq2a-uc.a.run.app";
+const baseImageUrl = "https://storage.googleapis.com/compressed_images_tikitiki/compressed/"
 
-module.exports = { baseUrl }
+module.exports = { baseUrl, baseImageUrl };

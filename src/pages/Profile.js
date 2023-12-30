@@ -32,19 +32,22 @@ import {
     Spinner
 } from '@chakra-ui/react';
 
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { baseUrl } from "../urls";
 import axios from "axios";
 import TransactionList from "../Components/TransactionList";
 import TransactionAccordionList from "../Components/TransactionAccordionList";
-import { UserContext } from "../userContext";
-import { WalletContext } from "../walletContext";
+import { useSelector } from "react-redux";
+import { baseImageUrl } from "../urls";
 
 function Profile() {
 
     const avatarInputRef = useRef(null);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const { user } = useSelector((state) => state.user)
+    const { wallet } = useSelector((state) => state.wallet)
 
     const [amount, setDepositAmount] = useState(50);
     const [phone_number, setPhoneNumber] = useState();
@@ -53,15 +56,10 @@ function Profile() {
     const [isInvalidPhone, setIsInvalidPhone] = useState(false);
     const [isInvalidAmount, setIsinvalidAmount] = useState(false);
     const [transactions, setTransactions] = useState([]);
-    //const [user, setUser] = useState({});
-    //const [wallet, setWallet] = useState({});
     const [avatar, setAvatarSrc] = useState(); // state for avatar image source
     const [isUploading, setIsUploading] = useState(false);
 
-    const user = useContext(UserContext);
-    const wallet = useContext(WalletContext);
-
-
+    
     const toast = useToast();
 
     const showToast = (status, message) => {
@@ -75,17 +73,13 @@ function Profile() {
         });
     }
 
-    // Implement the handleAvatarChange function to handle file selection
     const handleAvatarChange = (event) => {
+
+        event.preventDefault()
 
         const file = event.target.files[0];
 
         setIsUploading(true);
-        // You can now perform further processing on the selected file, such as uploading it to a server or displaying a preview of the image.
-
-        //You can now perform further processing on the selected file, such as uploading it to a server or displaying a preview of the image.
-
-        // Update the avatar source with the selected file
 
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
@@ -103,14 +97,13 @@ function Profile() {
         reader.onloadend = () => {
 
             const formData = new FormData();
-            formData.append('avatar', file); // Assuming the file field on the server is named 'avatar'
+            formData.append('avatar', file); 
 
             // Send the FormData object to the server using Axios or any other network request library
             axios.post(`${baseUrl}/session/avatar`, formData, { withCredentials: true })
                 .then(response => {
                     // Handle successful response from the server
                     console.log('File uploaded successfully:', response.data);
-                    // You can perform further actions, such as updating UI or displaying a success message
                     setAvatarSrc(reader.result);
 
                     setIsUploading(false);
@@ -130,6 +123,8 @@ function Profile() {
 
     function validatePhone(phone) {
 
+        console.log(phone)
+
         let error;
 
         if (!phone) {
@@ -143,14 +138,16 @@ function Profile() {
             }
 
             if (phone.length !== 12) {
+                if (phone.trim().length !== 10) {
 
-                error = "Enter a valid phone number"
+                    error = "Enter a valid phone number"
 
+                }
             }
+
+            return error;
+
         }
-
-        return error;
-
     }
 
     function depositFunds() {
@@ -190,7 +187,7 @@ function Profile() {
 
             })
             .catch((err) => {
-                showToast('error', "There was an error depositing");
+                //showToast('error', "There was an error depositing");
 
             })
 
@@ -205,6 +202,7 @@ function Profile() {
 
             })
             .catch((error) => {
+
 
                 alert(error.message);
             })
@@ -226,8 +224,6 @@ function Profile() {
                 console.log(error);
             })
     }
-
-    const baseImageUrl = "https://storage.googleapis.com/tikitiki-compressed-images/compressed/"
 
 
     return (
@@ -289,8 +285,8 @@ function Profile() {
 
             <Flex mb='4'>
                 <Avatar size='md'
-                    name={user.full_name}
-                    src={`${baseImageUrl}${user.avatar}`}
+                    name={user?.full_name}
+                    src={`${baseImageUrl}${user?.avatar}`}
                     onClick={() => avatarInputRef.current.click()}
                     cursor="pointer" />
                 <Spacer />
@@ -373,5 +369,6 @@ function Profile() {
         </>
     )
 }
+
 
 export default Profile;
