@@ -37,8 +37,7 @@ import { baseUrl } from "../urls";
 import axios from "axios";
 import TransactionList from "../Components/TransactionList";
 import TransactionAccordionList from "../Components/TransactionAccordionList";
-import { UserContext } from "../userContext";
-import { WalletContext } from "../walletContext";
+import { useSelector } from "react-redux";
 
 function Profile() {
 
@@ -53,15 +52,12 @@ function Profile() {
     const [isInvalidPhone, setIsInvalidPhone] = useState(false);
     const [isInvalidAmount, setIsinvalidAmount] = useState(false);
     const [transactions, setTransactions] = useState([]);
-    //const [user, setUser] = useState({});
-    //const [wallet, setWallet] = useState({});
     const [avatar, setAvatarSrc] = useState(); // state for avatar image source
     const [isUploading, setIsUploading] = useState(false);
 
-    const user = useContext(UserContext);
-    const wallet = useContext(WalletContext);
-
-
+    const user = useSelector(state => state.user)
+    const wallet = useSelector(state => state.wallet)    
+    
     const toast = useToast();
 
     const showToast = (status, message) => {
@@ -130,6 +126,8 @@ function Profile() {
 
     function validatePhone(phone) {
 
+        console.log(phone)
+
         let error;
 
         if (!phone) {
@@ -143,6 +141,7 @@ function Profile() {
             }
 
             if (phone.length !== 12) {
+            if (phone.trim().length !== 10) {
 
                 error = "Enter a valid phone number"
 
@@ -190,7 +189,7 @@ function Profile() {
 
             })
             .catch((err) => {
-                showToast('error', "There was an error depositing");
+                //showToast('error', "There was an error depositing");
 
             })
 

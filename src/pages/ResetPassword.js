@@ -27,9 +27,6 @@ export default function ResetPassword() {
 
     const login = (values, actions) => {
 
-        actions.isSubmitting = false
-        actions.isValidating = false
-
         const credential = {
             password: values.password,
             token: token
@@ -38,6 +35,8 @@ export default function ResetPassword() {
         axios.post(`${baseUrl}/users/forgotpassword`, credential)
             .then((response) => {
 
+                actions.setSubmitting(false);
+
                 toast({
                     title: 'Success',
                     description: "Password Changed Successfully, you may now login",
@@ -45,6 +44,8 @@ export default function ResetPassword() {
                     duration: 9000,
                     isClosable: true,
                 });
+
+
 
             })
             .catch((error) => {

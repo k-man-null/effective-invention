@@ -32,14 +32,15 @@ import {
 
 import Error from "../pages/Error"
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 import axios from "axios";
 
 import CountDown from "../Components/CountDown";
 import { baseUrl } from "../urls";
-import { UserContext } from "../userContext";
+import { useSelector } from "react-redux";
+
 
 
 async function getCompetition(game_id) {
@@ -145,7 +146,7 @@ export default function Competition() {
             isClosable: true,
         });
     }
-    const user = useContext(UserContext);
+    const user = useSelector(state => state.user)
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -429,7 +430,13 @@ export default function Competition() {
 
                     <Flex>
 
-                        <Button  isDisabled={competition?.status === "ended"} onClick={onOpen} w="100%" colorScheme='teal'>Enter</Button>
+                        <Button 
+                           isDisabled={competition?.status === "ended"}
+                           onClick={onOpen}
+                           w="100%"
+                           colorScheme='teal'>
+                           Enter
+                        </Button>
 
                     </Flex>
 

@@ -35,29 +35,43 @@ import {
   SettingsIcon
 } from '@chakra-ui/icons';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Outlet, Link } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { baseUrl } from "./urls";
-import { UserContext } from "./userContext";
-import { WalletContext } from "./walletContext";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "./redux/user-reducer";
+import { updateLoggedIn } from "./redux/loggedIn-reducer";
+import { updateWallet } from "./redux/wallet-reducer";
 
 function App() {
 
+
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
-  const [wallet, setWallet] = useState({});
+  let location = useLocation();
+
+  const { user } = useSelector((state) => state.user)
+  const { wallet } = useSelector((state) => state.wallet)
+  const { loggedIn } = useSelector(state => state.loggedIn)
+
+  console.log(loggedIn)
 
   const { isOpen, onToggle, onClose } = useDisclosure();
   const iconRef = useRef();
+
+  const logoutDispatch = useDispatch();
+  const loggedInDispatch = useDispatch();
+  const walletDispatch = useDispatch();
 
   function logout() {
 
     axios.get(`${baseUrl}/session/logout`, { withCredentials: true })
       .then((response) => {
 
-        setUser({});
+        localStorage.removeItem('user')
+        logoutDispatch(updateUser(null))
+        loggedInDispatch(updateLoggedIn(false))
         navigate("/");
 
       })
@@ -69,27 +83,37 @@ function App() {
 
   }
 
-  useEffect(() => {
-    axios.get(`${baseUrl}/session/minProfile`, { withCredentials: true })
-      .then((response) => {
+  function login() {
+    
+    localStorage.setItem('previousLocation', location.pathname);
+   
+    navigate("/enter")
 
-        setUser(response.data);
+    // axios.get(`${baseUrl}/session/logout`, { withCredentials: true })
+    //   .then((response) => {
 
-      })
-      .catch((error) => {
+    //     localStorage.removeItem('user')
+    //     logoutDispatch(updateUser(null))
+    //     loggedInDispatch(updateLoggedIn(false))
+    //     navigate("/");
 
-        console.log(error);
+    //   })
+    //   .catch((error) => {
 
-      })
+    //     console.log(error);
+
+    //   })
+
   }
 
-    , [])
 
   useEffect(() => {
     axios.get(`${baseUrl}/session/wallet`, { withCredentials: true })
       .then((response) => {
 
-        setWallet(response.data);
+        const walletData = response.data
+
+        walletDispatch(updateWallet(walletData))
 
       })
       .catch((error) => {
@@ -240,13 +264,32 @@ function App() {
                 <Divider />
 
                 <Stack paddingLeft='4' onClick={onClose}>
-                  <Button
-                    colorScheme='teal'
-                    type="button"
-                    variant="outline"
-                    onClick={logout}
 
-                  >Logout</Button>
+                  {loggedIn ?
+
+                    <Button
+                      colorScheme='teal'
+                      type="button"
+                      variant="outline"
+                      onClick={logout}
+
+                    >
+                      Logout
+                    </Button>
+                    :
+
+                    <Button
+                      colorScheme='teal'
+                      type="button"
+                      variant="outline"
+                      onClick={login}
+
+                    >
+                      Login
+                    </Button>
+
+                  }
+
 
                 </Stack>
 
@@ -415,12 +458,30 @@ function App() {
                 <Divider />
 
                 <Stack paddingLeft='4'>
-                  <Button
-                    colorScheme='teal'
-                    type="button"
-                    variant="outline"
-                    onClick={logout}
-                  >Logout</Button>
+                  {loggedIn ?
+
+                    <Button
+                      colorScheme='teal'
+                      type="button"
+                      variant="outline"
+                      onClick={logout}
+
+                    >
+                      Logout
+                    </Button>
+                    :
+
+                    <Button
+                      colorScheme='teal'
+                      type="button"
+                      variant="outline"
+                      onClick={login}
+
+                    >
+                      Login
+                    </Button>
+
+                  }
                 </Stack>
                 <ColorModeSwitcher>
 
@@ -432,11 +493,9 @@ function App() {
           </Show>
           {/* The main part of the app i.e outlet for routing */}
           <Box height='100%' width='1000px' padding='4' overflowY='scroll'>
-            <UserContext.Provider value={user}>
-              <WalletContext.Provider value={wallet}>
-                <Outlet />
-              </WalletContext.Provider>
-            </UserContext.Provider>
+
+            <Outlet />
+
           </Box>
         </Stack>
 

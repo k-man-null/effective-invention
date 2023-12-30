@@ -12,12 +12,18 @@ import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../urls";
 
 import { Field, Form, Formik } from 'formik';
+import { useDispatch } from "react-redux";
+
+import { updateUser } from "../redux/user-reducer";
+import { updateLoggedIn } from "../redux/loggedIn-reducer";
 
 export default function Login(props) {
 
     const navigate = useNavigate()
 
     const toast = useToast();
+    const dispatchUser = useDispatch()
+    const dispatchLoggedIn = useDispatch()
 
     const login = (values, actions) => {
 
@@ -28,11 +34,27 @@ export default function Login(props) {
 
         axios.post(`${baseUrl}/users/login`, credential, { withCredentials: true })
             .then((response) => {
-                
-                navigate("/app")
+
+                const userData = response.data.user
+
+                localStorage.setItem('user', JSON.stringify(userData));
+
+                dispatchUser(updateUser(userData))
+                dispatchLoggedIn(updateLoggedIn(true))
+
+                const previousLocation = localStorage.getItem('previousLocation');
+
+                if (previousLocation) {
+                    localStorage.removeItem('previousLocation');
+                    navigate(previousLocation);
+                } else {
+                    navigate("/app")
+                }
 
             })
             .catch((error) => {
+
+                console.log(error);
 
                 actions.setSubmitting(false);
 
@@ -43,12 +65,12 @@ export default function Login(props) {
                         switch (error.response.data["field"]) {
                             case "email":
                                 actions.setFieldError("email",
-                                "User with that email doesn't exist")
+                                    "User with that email doesn't exist")
                                 break;
 
                             case "password":
                                 actions.setFieldError("password",
-                                "Wrong password")
+                                    "Wrong password")
                                 break;
 
                             default:
@@ -64,7 +86,7 @@ export default function Login(props) {
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
-                    }); 
+                    });
 
                 }
             })

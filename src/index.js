@@ -22,11 +22,14 @@ import ResetPassword from './pages/ResetPassword';
 import Affiliate from './pages/Affiliate';
 import Giveaway from './pages/Giveaway';
 import PublicGiveaway from './pages/PublicGiveaway';
+import { Provider } from 'react-redux';
+import store from "./redux/store"
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
 root.render(
+  <Provider store={store}>
   <StrictMode>
     <BrowserRouter>
       <ColorModeScript />
@@ -52,4 +55,5 @@ root.render(
       </Routes>
     </BrowserRouter>
   </StrictMode>
+  </Provider>
 );

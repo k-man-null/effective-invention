@@ -21,15 +21,21 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionIcon,
-  AccordionPanel
+  AccordionPanel,
+  Image
 } from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CheckCircleIcon } from '@chakra-ui/icons';
+import RafflePreviewLanding from "../Components/rafflewithRibbon/RafflePreviewLanding";
+import reactLogo from "../assets/icons8-react-160.png"
+import raflleImage from "../assets/robert-linder-lVbj_jZVgZY-unsplash.jpg"
+import { useSelector } from "react-redux";
 
 
 function Landing() {
-  
+
   const { isOpen, onToggle } = useDisclosure()
  
+
   return (
     <ChakraProvider theme={theme}>
       <Box
@@ -48,6 +54,7 @@ function Landing() {
               <Stack>
                 <Text as='a' href="/public">Check for Products</Text>
                 <Text as='a' href="/enter">Showcase a Product</Text>
+                <Text as='a' href="/enter">Host a Raffle</Text>
                 <Text as='a' href="#FAQS">FAQ</Text>
                 <Text as='a' href="#TOCS">Terms and Conditions</Text>
                 <Text as='a' href="/enter">Login</Text>
@@ -108,6 +115,7 @@ function Landing() {
                 marginBottom={['5']}
               >
                Make money hosting raffles
+                Win Lots,     Everyday!
 
               </Text>
               <Text
@@ -115,6 +123,7 @@ function Landing() {
                 textAlign='center'
               >
                 Simply, we are an Escrow service providing trust and credibility in public competitions.
+                We help you run raffles.
 
               </Text>
             </Stack>
@@ -134,20 +143,68 @@ function Landing() {
                 }}
                 href={'enter'}
                 color='white'
-                as={'a'}>Sell a product or service free</Button>
+                as={'a'}>Start A Raffle</Button>
               <Button
                 size='lg'
                 variant='outline'
                 colorScheme='teal'
-                href="/app/competitions"
-                as={'a'}>View Products</Button>
+                href="/app"
+                as={'a'}>View Public Raffles</Button>
             </Stack>
           </Center>
-
         </Stack>
         {/* End Headline Page */}
-        
+        <RafflePreviewLanding />
+        <Flex
 
+          direction={['column', 'row']}
+          m="10%"
+          bg="teal.900"
+          gap="5"
+
+        >
+          <Box width={["100%", "50%"]}>
+
+            <Box height="40%" display="flex" alignItems="end" >
+              <Heading color="white" m="5px">
+                About TikiTiki
+              </Heading>
+            </Box>
+            <Box height="60%"  >
+              <Image src={reactLogo} boxSize='80px'
+                objectFit='cover' m="5px" />
+              <Text m="5px" color="white">
+                Since its founding in 2022 Tikitiki has been curated
+                to successfully handle raffling opportunities on
+                behalf of sellers,
+                producers or service industries.
+              </Text>
+
+            </Box>
+
+          </Box>
+          <Box width={["100%", "50%"]}>
+            <Box height="70%" >
+              <Center>
+                <Image src={raflleImage} boxSize='100%'
+                  objectFit='cover' m="10px" />
+              </Center>
+
+            </Box>
+
+            <Box height="26%" mt={4}>
+
+              <Text m="5px" color="white">
+                TikiTiki allows players to register for prices to be won
+              </Text>
+              <Text m="5px" color="white">
+                This is the new age of sales
+              </Text>
+
+            </Box>
+          </Box>
+
+        </Flex>
         <Stack
           mt={['100px', '150px', '250px']}
           marginX={['4', '7', 'auto']}
@@ -158,61 +215,28 @@ function Landing() {
             <Heading
               textAlign='center'
             >
-              How It Works
+              What is a Raffle?
             </Heading>
             <Text>
-              Attention sellers. You can now engage your windowshoppers in a more exciting
-              way. Host your product or service on TikiTiki and make your potential customer's dream come true.
-              This is a definate win win for everyone, but when done in a trustworthy and open way.
+              A raffle is a competition where you stand to win a prize by buying
+              a raffle ticket. When the the competition ends or all raffles are
+              sold,the prize is given to the winner.
+              A winning ticket is chosen at random and the winner receives
+              the product/service.
             </Text>
-            <Flex flexDirection={['column', 'row']}>
+          </Stack>
 
-              <Stack border='1px solid teal' padding='4' m='4'>
-                <Heading
-                  textAlign='center'
-                >
-                  Step 1. Create an Account.
-                </Heading>
-                <Text>
-                  Click the signup button and provide the necessary information.
-                  The registration is simple and easy,
-                  no documents needed.
-                </Text>
+        </Stack>
 
-              </Stack>
-              <Spacer />
 
-              <Stack border='1px solid teal' padding='4' m='4'>
-                <Heading
-                  textAlign='center'
-                >
-                  Step 2. Showcase Your Products/Services
-                </Heading>
-                <Text>
-                  Go to host a competition on your profile menu.
-                  Fill out the form, include a few pictures.
-                  Provide the number of tickets and the price of each ticket.
-                </Text>
+        {/* <Stack
+          mt={['30px']}
+          marginX={['4', '7', 'auto']}
+          maxWidth={[null, null, '80%', '60%']}
+          mb='60px'
+        >
 
-              </Stack>
-
-              <Spacer />
-
-              <Stack border='1px solid teal' padding='4' m='4'>
-                <Heading
-                  textAlign='center'
-                >
-                  Step 3. Set the Deadline
-                </Heading>
-                <Text>
-                  When filling the form, set the deadline.
-                  The deadline is a time in the future when the sale ends.
-                  When this deadline is reached, the giving process begins and all
-                  sales end.
-                </Text>
-
-              </Stack>
-              <Spacer />
+          <Flex border="1px solid red" minHeight="500px">
 
               <Stack border='1px solid teal' padding='4' m='4'>
                 <Heading
@@ -224,52 +248,40 @@ function Landing() {
                   The tickets will be sold to buyers, and one buyer will be picked randomly.
                   We encourage you to share the events on social media, or
                   suggest it on your youtube channel or in your physical shop.
+            <Box border="1px solid red" width="50%">
 
-                </Text>
+              <Heading>How to Play</Heading>
 
-              </Stack>
+              <Flex border="1px solid red" minHeight="200px">
 
-              <Spacer />
+                <Box border="1px solid red" width="30%">
+                  
+                </Box>
+                <Box border="1px solid red" width="70%">
+                  
+                </Box>
 
-              <Stack border='1px solid teal' padding='4' m='4'>
-                <Heading
-                  textAlign='center'
-                >
-                  Step 5. Prize awarding.
-                </Heading>
-                <Text>
-                  Get ready for the thrilling prize awarding process!
-                  The winner will be selected either when the deadline
-                  specified by the host is reached or when all tickets are sold,
-                  whichever comes first.
-                  This ensures a sense of excitement and urgency for all participants.
+              </Flex>
 
-                  When the prize is awarded, the revenue generated from ticket sales
-                  will be given to the host. It's important to note that the host will
-                  receive this revenue if they provide the promised prize to the lucky winner. This creates a win-win situation,
-                  encouraging hosts to fulfill their commitment and deliver the prize.
+            </Box>
+            <Box border="1px solid red" width="50%">
 
-                </Text>
+            </Box>
 
-              </Stack>
-
-            </Flex>
-          </Stack>
+          </Flex>
 
         </Stack>
 
+        </Stack> */}
 
-        {/* End Part 1 */}
         <Stack
           id="who"
           mt={['30px']}
           marginX={['4', '7', 'auto']}
-
           maxWidth={[null, null, '80%', '60%']}
           mb='60px'
         >
           <Stack
-
           >
             <Heading
               textAlign='center'
@@ -313,7 +325,6 @@ function Landing() {
           p='4'
         >
           <Stack
-
           >
             <Heading
               textAlign='center'
