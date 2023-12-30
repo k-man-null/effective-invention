@@ -1,7 +1,6 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
 
 import {
   BrowserRouter,
@@ -63,14 +62,3 @@ root.render(
   </StrictMode>
   </Provider>
 );
-
-const SendAnalytics = ()=> {
-  ReactGA.send({
-    hitType: "pageview",
-    page: window.location.pathname,
-  });
-
-  console.log(window.location.pathname);
-}
-
-reportWebVitals(SendAnalytics);
