@@ -47,15 +47,12 @@ import { updateWallet } from "./redux/wallet-reducer";
 
 function App() {
 
-
   const navigate = useNavigate();
   let location = useLocation();
 
   const { user } = useSelector((state) => state.user)
   const { wallet } = useSelector((state) => state.wallet)
   const { loggedIn } = useSelector(state => state.loggedIn)
-
-  console.log(loggedIn)
 
   const { isOpen, onToggle, onClose } = useDisclosure();
   const iconRef = useRef();
@@ -68,6 +65,8 @@ function App() {
 
     axios.get(`${baseUrl}/session/logout`, { withCredentials: true })
       .then((response) => {
+
+        console.log("response")
 
         localStorage.removeItem('user')
         logoutDispatch(updateUser(null))
@@ -89,20 +88,6 @@ function App() {
    
     navigate("/enter")
 
-    // axios.get(`${baseUrl}/session/logout`, { withCredentials: true })
-    //   .then((response) => {
-
-    //     localStorage.removeItem('user')
-    //     logoutDispatch(updateUser(null))
-    //     loggedInDispatch(updateLoggedIn(false))
-    //     navigate("/");
-
-    //   })
-    //   .catch((error) => {
-
-    //     console.log(error);
-
-    //   })
 
   }
 

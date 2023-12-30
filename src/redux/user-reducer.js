@@ -3,6 +3,8 @@ import { getUserFromStorage } from "../utility-functions/auth"
 
 const initialUser = getUserFromStorage();
 
+console.log(initialUser);
+
 const initialState = {
     user: initialUser
 }
@@ -13,7 +15,6 @@ const userSlice = createSlice({
     reducers: {
         updateUser: (state, action) => {
             state.user = action.payload
-            console.log(action.payload)
         }
     }
 })

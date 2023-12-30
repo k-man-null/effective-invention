@@ -28,8 +28,6 @@ import {
 
 } from "@chakra-ui/react";
 
-
-
 import Error from "../pages/Error"
 
 import { useState, useEffect } from "react";
@@ -39,8 +37,8 @@ import axios from "axios";
 
 import CountDown from "../Components/CountDown";
 import { baseUrl } from "../urls";
+import { baseImageUrl } from "../urls";
 import { useSelector } from "react-redux";
-
 
 
 async function getCompetition(game_id) {
@@ -318,7 +316,6 @@ export default function Competition() {
 
     }
 
-    const baseImageUrl = "https://storage.googleapis.com/tikitiki-compressed-images/compressed/"
 
     return (
 

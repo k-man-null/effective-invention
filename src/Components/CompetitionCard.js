@@ -11,10 +11,10 @@ import {
 
 import CountDown from "../Components/CountDown";
 
+import { baseImageUrl } from "../urls";
+
 export default function CompetitionCard({ competition }) {
 
-    const baseImageUrl = "https://storage.googleapis.com/tikitiki-compressed-images/compressed/"
-    
     return (
 
         <LinkBox as='article' maxW='sm' rounded='md'>
