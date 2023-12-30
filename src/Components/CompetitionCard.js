@@ -29,7 +29,7 @@ export default function CompetitionCard({ competition }) {
                 </LinkOverlay>
                 <Image
                     objectFit='cover'
-                    src={`${baseImageUrl}thumb_${competition?.prize_images[0]}`}
+                    src={`${baseImageUrl}${competition?.prize_images[0]}`}
                     alt='Caffe Latte'
                     height={"150px"}
                     width="100%"

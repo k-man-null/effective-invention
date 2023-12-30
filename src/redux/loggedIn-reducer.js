@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getSessionCookie } from "../utility-functions/auth"
+import { getUserFromStorage } from "../utility-functions/auth"
 
-const loggedIn = getSessionCookie();
+const user = getUserFromStorage();
+
+let loggedIn = false;
+
+if(user != null) {
+    loggedIn = true
+}
 
 const initialState = {
     loggedIn

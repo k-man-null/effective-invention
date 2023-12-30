@@ -32,18 +32,22 @@ import {
     Spinner
 } from '@chakra-ui/react';
 
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { baseUrl } from "../urls";
 import axios from "axios";
 import TransactionList from "../Components/TransactionList";
 import TransactionAccordionList from "../Components/TransactionAccordionList";
 import { useSelector } from "react-redux";
+import { baseImageUrl } from "../urls";
 
 function Profile() {
 
     const avatarInputRef = useRef(null);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const { user } = useSelector((state) => state.user)
+    const { wallet } = useSelector((state) => state.wallet)
 
     const [amount, setDepositAmount] = useState(50);
     const [phone_number, setPhoneNumber] = useState();
@@ -55,9 +59,7 @@ function Profile() {
     const [avatar, setAvatarSrc] = useState(); // state for avatar image source
     const [isUploading, setIsUploading] = useState(false);
 
-    const user = useSelector(state => state.user)
-    const wallet = useSelector(state => state.wallet)
-
+    
     const toast = useToast();
 
     const showToast = (status, message) => {
@@ -71,17 +73,13 @@ function Profile() {
         });
     }
 
-    // Implement the handleAvatarChange function to handle file selection
     const handleAvatarChange = (event) => {
+
+        event.preventDefault()
 
         const file = event.target.files[0];
 
         setIsUploading(true);
-        // You can now perform further processing on the selected file, such as uploading it to a server or displaying a preview of the image.
-
-        //You can now perform further processing on the selected file, such as uploading it to a server or displaying a preview of the image.
-
-        // Update the avatar source with the selected file
 
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
@@ -99,14 +97,13 @@ function Profile() {
         reader.onloadend = () => {
 
             const formData = new FormData();
-            formData.append('avatar', file); // Assuming the file field on the server is named 'avatar'
+            formData.append('avatar', file); 
 
             // Send the FormData object to the server using Axios or any other network request library
             axios.post(`${baseUrl}/session/avatar`, formData, { withCredentials: true })
                 .then(response => {
                     // Handle successful response from the server
                     console.log('File uploaded successfully:', response.data);
-                    // You can perform further actions, such as updating UI or displaying a success message
                     setAvatarSrc(reader.result);
 
                     setIsUploading(false);
@@ -151,227 +148,227 @@ function Profile() {
             return error;
 
         }
+    }
 
-        function depositFunds() {
+    function depositFunds() {
 
-            if (amount < 10) {
+        if (amount < 10) {
 
-                setIsinvalidAmount(true);
-                setAmountError("Minimum deposit is KSH 50");
+            setIsinvalidAmount(true);
+            setAmountError("Minimum deposit is KSH 50");
 
-                return;
-            }
-
-            if (phone_number === undefined) {
-
-                setIsInvalidPhone(true);
-                setPhoneNumberError("Phone number is required");
-
-                return;
-            }
-
-            const result = validatePhone(phone_number);
-
-            if (result !== undefined) {
-                setIsInvalidPhone(true);
-                setPhoneNumberError(result)
-                return;
-            }
-
-            const data = {
-                amount: amount,
-                phone_number: phone_number
-            };
-
-            axios.post(`${baseUrl}/session/deposit`, data, { withCredentials: true })
-                .then((response) => {
-                    showToast('success', "Your deposit was successful, refresh the page to see your new balance");
-
-                })
-                .catch((err) => {
-                    //showToast('error', "There was an error depositing");
-
-                })
-
+            return;
         }
 
+        if (phone_number === undefined) {
 
-        useEffect(() => {
-            axios.get(`${baseUrl}/session/transactionhistory`, { withCredentials: true })
-                .then((response) => {
+            setIsInvalidPhone(true);
+            setPhoneNumberError("Phone number is required");
 
-                    setTransactions(response.data.results);
-
-                })
-                .catch((error) => {
-
-                    alert(error.message);
-                })
+            return;
         }
 
-            , [])
+        const result = validatePhone(phone_number);
 
-        function verifyEmail() {
-
-            axios.get(`${baseUrl}/session/verifyemail`, { withCredentials: true })
-                .then((response) => {
-
-                    console.log(response);
-                    showToast('success', response.data.message)
-
-                })
-                .catch((error) => {
-
-                    console.log(error);
-                })
+        if (result !== undefined) {
+            setIsInvalidPhone(true);
+            setPhoneNumberError(result)
+            return;
         }
 
-        const baseImageUrl = "https://storage.googleapis.com/tikitiki-compressed-images/compressed/"
+        const data = {
+            amount: amount,
+            phone_number: phone_number
+        };
+
+        axios.post(`${baseUrl}/session/deposit`, data, { withCredentials: true })
+            .then((response) => {
+                showToast('success', "Your deposit was successful, refresh the page to see your new balance");
+
+            })
+            .catch((err) => {
+                //showToast('error', "There was an error depositing");
+
+            })
+
+    }
 
 
-        return (
-            <>
+    useEffect(() => {
+        axios.get(`${baseUrl}/session/transactionhistory`, { withCredentials: true })
+            .then((response) => {
 
-                <Modal isOpen={isOpen} onClose={onClose} isCentered>
-                    <ModalOverlay bg='none'
-                        backdropFilter='auto'
-                        backdropBlur='2px' />
-                    <ModalContent>
-                        <ModalHeader>Deposit funds to join competitions</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
+                setTransactions(response.data.results);
 
-                            <FormControl isInvalid={isInvalidAmount}>
-                                <FormLabel>Enter your deposit amount</FormLabel>
-                                <NumberInput
-                                    onChange={(value) => {
-                                        setDepositAmount(value);
-                                    }}
-                                    value={amount}
-                                >
-                                    <NumberInputField />
-                                    <NumberInputStepper>
-                                        <NumberIncrementStepper />
-                                        <NumberDecrementStepper />
-                                    </NumberInputStepper>
-                                </NumberInput>
-                                <FormErrorMessage>{amount_error}</FormErrorMessage>
-                            </FormControl>
-
-                            <FormControl isInvalid={isInvalidPhone}>
-                                <FormLabel>Enter your mpesa phone number</FormLabel>
-                                <Input
-                                    onChange={(event) => {
-                                        setPhoneNumber(event.target.value);
-                                    }}
-                                    value={phone_number}
-                                    placeholder="254722000000"
-                                    type="text"
-                                >
-                                </Input>
-                                <FormErrorMessage>{phone_number_error}</FormErrorMessage>
-                            </FormControl>
-
-                            <Divider marginY={4}></Divider>
-
-                        </ModalBody>
-
-                        <ModalFooter>
-                            <Button variant='outline' colorScheme='red' mr={3} onClick={onClose}>
-                                Close
-                            </Button>
-                            <Button onClick={depositFunds} colorScheme="teal" variant='solid'>Deposit</Button>
-                        </ModalFooter>
-
-                    </ModalContent>
-                </Modal>
-
-                <Flex mb='4'>
-                    <Avatar size='md'
-                        name={user.full_name}
-                        src={`${baseImageUrl}${user.avatar}`}
-                        onClick={() => avatarInputRef.current.click()}
-                        cursor="pointer" />
-                    <Spacer />
-                    {isUploading ? <Spinner
-                        thickness='4px'
-                        speed='0.65s'
-                        emptyColor='gray.200'
-                        color='teal.500'
-                        size='l'
-                    /> : ""}
-                    <Text>Profile Photo</Text>
-                    <Input
-                        type="file"
-                        display="none"
-                        onChange={handleAvatarChange}
-                        ref={avatarInputRef}
-                    />
-                </Flex>
-
-                <Divider mb='4' />
-
-                <Flex mb='4'>
-                    <Text>Current Balance</Text>
-                    <Spacer />
-                    <Text>{wallet.available_balance}</Text>
-                </Flex>
-
-                <Button mb='4' onClick={onOpen} colorScheme="teal">
-                    Deposit Funds
-                </Button>
-
-                <Divider mb='4' />
-
-                <Flex mb='4'>
-                    <Text>Username</Text>
-                    <Spacer />
-                    <Text>{user.user_name}</Text>
-                </Flex>
-
-                <Divider mb='4' />
-
-                <Flex mb='4'>
-                    <Text>Email</Text>
-                    <Spacer />
-                    <Text>{user.email}</Text>
-
-                </Flex>
-
-                {user.verified ? <Badge colorScheme='green'>Email Verified</Badge> : <Button colorScheme="teal" onClick={verifyEmail}>
-                    verifyEmail
-                </Button>}
-
-                <Divider my='4' />
+            })
+            .catch((error) => {
 
 
-                <Flex mb='4'>
-                    <Text>Phone</Text>
-                    <Spacer />
-                    <Text>{user.phone_number}</Text>
-                </Flex>
+                alert(error.message);
+            })
+    }
 
-                <Heading as='h2' size='md'>Transaction List</Heading>
+        , [])
 
-                <Divider my='4' />
+    function verifyEmail() {
 
-                <Show above='lg'>
-                    <TransactionList transactions={transactions} />
+        axios.get(`${baseUrl}/session/verifyemail`, { withCredentials: true })
+            .then((response) => {
 
-                </Show>
-                {/* <Hide below='md'>
+                console.log(response);
+                showToast('success', response.data.message)
+
+            })
+            .catch((error) => {
+
+                console.log(error);
+            })
+    }
+
+
+    return (
+        <>
+
+            <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                <ModalOverlay bg='none'
+                    backdropFilter='auto'
+                    backdropBlur='2px' />
+                <ModalContent>
+                    <ModalHeader>Deposit funds to join competitions</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+
+                        <FormControl isInvalid={isInvalidAmount}>
+                            <FormLabel>Enter your deposit amount</FormLabel>
+                            <NumberInput
+                                onChange={(value) => {
+                                    setDepositAmount(value);
+                                }}
+                                value={amount}
+                            >
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
+                            <FormErrorMessage>{amount_error}</FormErrorMessage>
+                        </FormControl>
+
+                        <FormControl isInvalid={isInvalidPhone}>
+                            <FormLabel>Enter your mpesa phone number</FormLabel>
+                            <Input
+                                onChange={(event) => {
+                                    setPhoneNumber(event.target.value);
+                                }}
+                                value={phone_number}
+                                placeholder="254722000000"
+                                type="text"
+                            >
+                            </Input>
+                            <FormErrorMessage>{phone_number_error}</FormErrorMessage>
+                        </FormControl>
+
+                        <Divider marginY={4}></Divider>
+
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button variant='outline' colorScheme='red' mr={3} onClick={onClose}>
+                            Close
+                        </Button>
+                        <Button onClick={depositFunds} colorScheme="teal" variant='solid'>Deposit</Button>
+                    </ModalFooter>
+
+                </ModalContent>
+            </Modal>
+
+            <Flex mb='4'>
+                <Avatar size='md'
+                    name={user?.full_name}
+                    src={`${baseImageUrl}${user?.avatar}`}
+                    onClick={() => avatarInputRef.current.click()}
+                    cursor="pointer" />
+                <Spacer />
+                {isUploading ? <Spinner
+                    thickness='4px'
+                    speed='0.65s'
+                    emptyColor='gray.200'
+                    color='teal.500'
+                    size='l'
+                /> : ""}
+                <Text>Profile Photo</Text>
+                <Input
+                    type="file"
+                    display="none"
+                    onChange={handleAvatarChange}
+                    ref={avatarInputRef}
+                />
+            </Flex>
+
+            <Divider mb='4' />
+
+            <Flex mb='4'>
+                <Text>Current Balance</Text>
+                <Spacer />
+                <Text>{wallet.available_balance}</Text>
+            </Flex>
+
+            <Button mb='4' onClick={onOpen} colorScheme="teal">
+                Deposit Funds
+            </Button>
+
+            <Divider mb='4' />
+
+            <Flex mb='4'>
+                <Text>Username</Text>
+                <Spacer />
+                <Text>{user.user_name}</Text>
+            </Flex>
+
+            <Divider mb='4' />
+
+            <Flex mb='4'>
+                <Text>Email</Text>
+                <Spacer />
+                <Text>{user.email}</Text>
+
+            </Flex>
+
+            {user.verified ? <Badge colorScheme='green'>Email Verified</Badge> : <Button colorScheme="teal" onClick={verifyEmail}>
+                verifyEmail
+            </Button>}
+
+            <Divider my='4' />
+
+
+            <Flex mb='4'>
+                <Text>Phone</Text>
+                <Spacer />
+                <Text>{user.phone_number}</Text>
+            </Flex>
+
+            <Heading as='h2' size='md'>Transaction List</Heading>
+
+            <Divider my='4' />
+
+            <Show above='lg'>
+                <TransactionList transactions={transactions} />
+
+            </Show>
+            {/* <Hide below='md'>
                 <TransactionAccordionList transactions={transactions} />
 
             </Hide> */}
 
-                <Show below='lg'>
-                    <TransactionAccordionList transactions={transactions} />
+            <Show below='lg'>
+                <TransactionAccordionList transactions={transactions} />
 
-                </Show>
+            </Show>
 
-            </>
-        )
-    }
+        </>
+    )
 }
+
 
 export default Profile;

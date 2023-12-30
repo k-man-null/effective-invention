@@ -52,7 +52,8 @@ function App() {
 
   const { user } = useSelector((state) => state.user)
   const { wallet } = useSelector((state) => state.wallet)
-  const { loggedIn } = useSelector(state => state.loggedIn)
+  const { loggedIn } = useSelector((state) => state.loggedIn)
+
 
   const { isOpen, onToggle, onClose } = useDisclosure();
   const iconRef = useRef();
@@ -140,7 +141,6 @@ function App() {
               <Stack>
                 <Stack paddingLeft='4'>
 
-                  {/* TODO: Add a user avatar */}
                   <Heading as='h2' size="md">Profile</Heading>
                   <Text>
                     {user?.user_name}
@@ -151,7 +151,6 @@ function App() {
                   <Text>
                     Credit: KSH: {wallet?.available_balance}
                   </Text>
-                  {/* TODO: Show the users account balance form intasend wallet */}
 
                   <Link to="profile" onClick={onClose}>
                     <Stack direction="row">
@@ -230,7 +229,6 @@ function App() {
                 </Stack>
 
                 <Divider />
-
 
 
                 <Stack paddingLeft='4'>

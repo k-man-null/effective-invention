@@ -6,14 +6,3 @@ export function getUserFromStorage() {
 
     return null;
 }
-
-export function getSessionCookie() {
-    const cookies = document.cookie.split('; ');
-    const sessionCookie = cookies.find(cookie => cookie.startsWith('session='));
-    if (sessionCookie) {
-        console.log(sessionCookie)
-        return true
-    } 
-    
-    return false
-}

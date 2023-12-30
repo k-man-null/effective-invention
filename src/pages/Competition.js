@@ -144,8 +144,8 @@ export default function Competition() {
             isClosable: true,
         });
     }
-    const user = useSelector(state => state.user)
-
+    const { user } = useSelector((state) => state.user)
+    
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const [ticketPurchase, setTicketPurchase] = useState(1);
@@ -392,7 +392,7 @@ export default function Competition() {
                     <Heading mb='2' size="lg" color='teal.400'>{competition?.title}</Heading>
 
                     <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                        <Avatar name={creator?.name} src={`${baseImageUrl}thumb_${creator?.avatar}`} />
+                        <Avatar name={creator?.name} src={`${baseImageUrl}${creator?.avatar}`} />
 
                         <Box>
                             <Heading size='sm'>{creator?.name}</Heading>
