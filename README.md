@@ -49,25 +49,25 @@ This the frontend part of a large application that provides users the ability to
 
 ## 3. [DRAWING-MICROSERVICE](https://github.com/k-man-null/pick-winning-ticket)
 
- # Technologies
+ ## Technologies
 
  - Google Cloud Functions
  - Google Cloud PubSub
 
 ## 4. [IMAGE-COMPRESSION-RESIZE](https://github.com/k-man-null/image-compressor-cloud-function) 
 
- # Technologies
+ ## Technologies
  - Sharp [SHARP-NODEJS] (https://github.com/lovell/sharp)
  - Google Cloud Functions
  - Google Cloud Storage triggers
 
 ## 5. [IMAGE-STORAGE](https://cloud.google.com/storage?hl=en)
 
- # Technologies
+ ## Technologies
 - Google Cloud Storage
 
 ## 6. [EMAIL-SENDING](https://github.com/k-man-null/mailman-lambda)
- # Technologies
+ ## Technologies
  - AWS SES
  - AWS Lambda
  - Google Cloud PubSub subscription
@@ -80,7 +80,7 @@ This the frontend part of a large application that provides users the ability to
 3. npm start
 
 
-## User Stories
+# User Stories
 
 
 1. A use can register with an email, name, password and mpesa phone number in the format "245722000000"
