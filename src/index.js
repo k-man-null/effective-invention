@@ -31,7 +31,6 @@ import store from "./redux/store"
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
-ReactGA.initialize("G-9F53TL6YZE");
 
 root.render(
   <Provider store={store}>

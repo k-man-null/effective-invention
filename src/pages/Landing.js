@@ -24,11 +24,10 @@ import {
   AccordionPanel,
   Image
 } from '@chakra-ui/react';
-import { HamburgerIcon, CheckCircleIcon } from '@chakra-ui/icons';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import RafflePreviewLanding from "../Components/rafflewithRibbon/RafflePreviewLanding";
 import reactLogo from "../assets/icons8-react-160.png"
 import raflleImage from "../assets/robert-linder-lVbj_jZVgZY-unsplash.jpg"
-import { useSelector } from "react-redux";
 
 
 function Landing() {
@@ -52,13 +51,8 @@ function Landing() {
           >
             <Center>
               <Stack>
-                <Text as='a' href="/public">Check for Products</Text>
-                <Text as='a' href="/enter">Showcase a Product</Text>
                 <Text as='a' href="/enter">Host a Raffle</Text>
-                <Text as='a' href="/public">Public Sales</Text>
-                <Text as='a' href="/enter">Host a Sale</Text>
                 <Text as='a' href="#FAQS">FAQ</Text>
-                <Text as='a' href="#TOCS">Terms and Conditions</Text>
                 <Text as='a' href="/enter">Login</Text>
                 <Text as='a' href="/enter">Signup</Text>
               </Stack>

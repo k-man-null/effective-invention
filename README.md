@@ -1,23 +1,45 @@
-### A raffle hosting website's frontend
+# A raffle hosting website's frontend
+
+# Test Users
+
+You can test with the following users so you dont need to 
+register with your phone number or email
+
+NOTE: Do not change the passwords
+
+
+email: ```Lucy@mail.com```
+
+password: ```demouser2```
+
+email: ```testuser1@gmail.com```
+
+password: ```demouser1```
+
+email: ```cynthia@mail.com```
+
+password: ```demouser3```
+
+
 
 ## Introduction
 
-This is part of a large application that provides users the ability to host raffles.
+This the frontend part of a large application that provides users the ability to host raffles.
 
 ## Here are all the parts of the application's microservice architecture
 
-1. [FRONTEND](https://github.com/k-man-null/effective-invention)
- # Technologies
+## 1. [FRONTEND](https://github.com/k-man-null/effective-invention)
+ ## Technologies
  - React
  - Chakra UI
  - Redux
  - ANT design
  - Firebase Hosting
 
- The [public url is](https://tikitiki.me)
+ The public url is [here](https://tikitiki.me) 
 
-2. [REST-API](https://github.com/k-man-null/fluffy-memory)
- # Technologies
+## 2. [REST-API](https://github.com/k-man-null/fluffy-memory)
+ ## Technologies
 
  - NodeJS
  - Express
@@ -25,23 +47,26 @@ This is part of a large application that provides users the ability to host raff
  - Intasend Payment
  - Google Cloud Run
 
-3. [DRAWING-MICROSERVICE](https://github.com/k-man-null/pick-winning-ticket)
+## 3. [DRAWING-MICROSERVICE](https://github.com/k-man-null/pick-winning-ticket)
 
  # Technologies
 
  - Google Cloud Functions
  - Google Cloud PubSub
 
-4. [IMAGE-COMPRESSION-RESIZE](https://github.com/k-man-null/image-compressor-cloud-function) 
+## 4. [IMAGE-COMPRESSION-RESIZE](https://github.com/k-man-null/image-compressor-cloud-function) 
 
  # Technologies
  - Sharp [SHARP-NODEJS] (https://github.com/lovell/sharp)
  - Google Cloud Functions
  - Google Cloud Storage triggers
 
-5. [IMAGE-STORAGE](https://cloud.google.com/storage?hl=en)
+## 5. [IMAGE-STORAGE](https://cloud.google.com/storage?hl=en)
 
-6. [EMAIL-SENDING](https://github.com/k-man-null/mailman-lambda)
+ # Technologies
+- Google Cloud Storage
+
+## 6. [EMAIL-SENDING](https://github.com/k-man-null/mailman-lambda)
  # Technologies
  - AWS SES
  - AWS Lambda
@@ -73,5 +98,3 @@ This is part of a large application that provides users the ability to host raff
 13. A user can see all the raffles(games) available
 
 ... more to come
-
-
